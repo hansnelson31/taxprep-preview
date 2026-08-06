@@ -312,6 +312,7 @@ section.tight { padding: var(--sp-9) 0; }
 
 .card {
   background: var(--surface-card);
+  color: var(--text-body);
   border-radius: var(--r-lg);
   padding: var(--sp-7) var(--sp-6);
   box-shadow: var(--shadow-md);
@@ -339,7 +340,7 @@ section.tight { padding: var(--sp-9) 0; }
 .feature-icon.tone-accent { background: var(--burnt-100); color: var(--burnt-600); }
 .feature-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
-.card-photo { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); background: var(--surface-card); }
+.card-photo { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); background: var(--surface-card); color: var(--text-body); }
 .card-photo img { height: 220px; width: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-standard); }
 .card-photo:hover img { transform: scale(1.04); }
 .card-photo .card-photo-body { padding: 24px 26px; }
@@ -362,6 +363,7 @@ section.tight { padding: var(--sp-9) 0; }
 /* ---- Quote ---- */
 .quote-card {
   background: var(--surface-card);
+  color: var(--text-body);
   border-radius: var(--r-lg);
   padding: var(--sp-7);
   box-shadow: var(--shadow-md);
