@@ -177,18 +177,22 @@ section.tight { padding: var(--sp-9) 0; }
 .btn:active { transform: translateY(1px); }
 .btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .btn-lg { height: 56px; padding: 0 30px; font-size: 17px; }
-.btn-primary { background: var(--denim-700); color: #fff; }
-.btn-primary:hover { background: var(--denim-800); box-shadow: var(--shadow-md); }
-.btn-secondary { background: var(--green-700); color: #fff; }
-.btn-secondary:hover { background: var(--green-900); box-shadow: var(--shadow-md); }
-.btn-accent { background: var(--burnt-600); color: #fff; }
-.btn-accent:hover { background: var(--burnt-700); box-shadow: var(--shadow-md); }
-.btn-outline { background: transparent; border-color: var(--border-strong); color: var(--text-strong); box-shadow: none; }
-.btn-outline:hover { background: var(--grain-100); }
-.btn-outline-onDark { background: transparent; border-color: rgba(255,255,255,0.55); color: #fff; box-shadow: none; }
-.btn-outline-onDark:hover { background: rgba(255,255,255,0.12); }
-.btn-ghost { background: transparent; color: var(--text-strong); box-shadow: none; }
-.btn-ghost:hover { background: var(--grain-100); }
+/* Compound .btn.btn-X selectors (specificity 0,2,0) so button colors reliably
+   beat single class+element link rules from parent containers (e.g. `.nav-links a`,
+   `.prose a`, `.footer-grid a`), which would otherwise win on specificity and make
+   button labels invisible against their own background. */
+.btn.btn-primary { background: var(--denim-700); color: #fff; }
+.btn.btn-primary:hover { background: var(--denim-800); box-shadow: var(--shadow-md); }
+.btn.btn-secondary { background: var(--green-700); color: #fff; }
+.btn.btn-secondary:hover { background: var(--green-900); box-shadow: var(--shadow-md); }
+.btn.btn-accent { background: var(--burnt-600); color: #fff; }
+.btn.btn-accent:hover { background: var(--burnt-700); box-shadow: var(--shadow-md); }
+.btn.btn-outline { background: transparent; border-color: var(--border-strong); color: var(--text-strong); box-shadow: none; }
+.btn.btn-outline:hover { background: var(--grain-100); }
+.btn.btn-outline-onDark { background: transparent; border-color: rgba(255,255,255,0.55); color: #fff; box-shadow: none; }
+.btn.btn-outline-onDark:hover { background: rgba(255,255,255,0.12); }
+.btn.btn-ghost { background: transparent; color: var(--text-strong); box-shadow: none; }
+.btn.btn-ghost:hover { background: var(--grain-100); }
 
 /* ---- Header / Nav ---- */
 .site-header {
@@ -209,6 +213,7 @@ section.tight { padding: var(--sp-9) 0; }
 .nav-links { display: flex; align-items: center; gap: 30px; }
 .nav-links a { text-decoration: none; font-weight: 600; font-size: 15px; color: var(--text-strong); padding: 6px 0; }
 .nav-links a:hover { color: var(--green-700); }
+.nav-links a.btn { padding: 0 22px; }
 .nav-dropdown { position: relative; }
 .nav-dropdown-menu {
   display: none;
