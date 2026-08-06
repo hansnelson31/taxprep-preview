@@ -5,19 +5,52 @@ description: "Accounting and bookkeeping, tax preparation and planning, and busi
 ---
 
 <section class="hero hero-sm" style="background-image: url('{{ "/assets/img/photos/rural-road-sunset.jpg" | relative_url }}');">
-  <div class="container">
-    <span class="eyebrow">Services</span>
+  <div class="container-xl">
+    <span class="eyebrow tone-onDark">Services</span>
     <h1>Right on the money, every time.</h1>
-    <p class="lede">Tailored strategies to reduce your tax bill, presented and effectuated &mdash; for businesses, individuals, trusts, and estates.</p>
+    <p class="lead">Tailored strategies to reduce your tax bill, presented and effectuated &mdash; for businesses, individuals, trusts, and estates.</p>
   </div>
 </section>
 
 <section>
-  <div class="container">
+  <div class="container-xl">
+    <div class="tab-divider">
+      <span class="tab-num">01</span>
+      <span class="tab-rule"></span>
+      <div class="tab-body">
+        <span class="eyebrow tone-seafoam">What We Do</span>
+        <h2>Three ways we help</h2>
+      </div>
+    </div>
     <div class="grid grid-3">
-      <div class="card">
+      <div class="card feature-card">
+        <div class="feature-icon">{% include icons/calculator.html %}</div>
         <h3>Accounting &amp; Bookkeeping</h3>
-        <p>Helping you record and understand the economics of your business.</p>
+        <p>Helping you record and understand the economics of your business. We handle QuickBooks consulting, training, and setup, plus ongoing monthly bookkeeping &mdash; so your numbers are accurate, current, and ready whenever you need them, without you having to become a bookkeeper yourself.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">{% include icons/file-percent.html %}</div>
+        <h3>Tax Preparation &amp; Planning</h3>
+        <p>Tailored strategies to reduce your tax bill, presented and effectuated &mdash; for S Corps, partnerships, C Corps, sole proprietors, and LLCs, as well as individuals, trusts, and estates. From stock compensation to self-employment to real estate, we plan ahead instead of scrambling every April.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">{% include icons/compass.html %}</div>
+        <h3>Business Advisory Services</h3>
+        <p>Guidance to help keep your business on the right path. We work through entity selection, cash management, and process improvements together, so decisions about structure and operations are made with your actual numbers in mind &mdash; not guesswork or generic advice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-tan">
+  <div class="container-xl">
+    <div class="section-header">
+      <span class="eyebrow tone-seafoam">The Specifics</span>
+      <h2>What's covered under each service</h2>
+    </div>
+    <div class="grid grid-3">
+      <div>
+        <h4>Accounting &amp; Bookkeeping</h4>
         <ul class="check-list">
           <li>QuickBooks Consulting</li>
           <li>QuickBooks Training</li>
@@ -25,37 +58,58 @@ description: "Accounting and bookkeeping, tax preparation and planning, and busi
           <li>Monthly Bookkeeping</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>Tax Preparation &amp; Planning</h3>
-        <p>Tailored strategies to reduce your tax bill, presented and effectuated.</p>
-        <p style="font-weight:600; margin-bottom:0.3em;">Businesses</p>
+      <div>
+        <h4>Tax Preparation &amp; Planning</h4>
         <ul class="check-list">
-          <li>S Corporations, Partnerships, C Corporations</li>
-          <li>Sole Proprietors &amp; LLCs</li>
-        </ul>
-        <p style="font-weight:600; margin-bottom:0.3em;">Individuals</p>
-        <ul class="check-list">
-          <li>Tax savings opportunities &amp; planning</li>
-          <li>Stock compensation, crypto, investments</li>
-          <li>Representation before the IRS</li>
-          <li>Home office deductions, self-employment</li>
-          <li>Tax credits, real estate, Social Security</li>
-        </ul>
-        <p style="font-weight:600; margin-bottom:0.3em;">Trusts &amp; Estates</p>
-        <ul class="check-list">
-          <li>Complex, simple, and grantor trusts</li>
-          <li>Estates</li>
+          <li>Businesses &mdash; S Corps, Partnerships, C Corps, Sole Proprietors, LLCs</li>
+          <li>Individuals &mdash; stock comp, crypto, real estate, Social Security, self-employment, IRS representation</li>
+          <li>Trusts &amp; Estates &mdash; complex, simple, and grantor trusts</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>Business Advisory Services</h3>
-        <p>Guidance to help keep your business on the right path.</p>
+      <div>
+        <h4>Business Advisory</h4>
         <ul class="check-list">
-          <li>Entity selection &amp; formation (S Corp vs. Sole Member LLC vs. Partnership vs. C Corp)</li>
+          <li>Entity selection &amp; formation</li>
           <li>Cash management</li>
-          <li>Business process diagrams &amp; process improvements</li>
+          <li>Process diagrams &amp; improvements</li>
           <li>Inventory management</li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-xl">
+    <div class="tab-divider">
+      <span class="tab-num">02</span>
+      <span class="tab-rule"></span>
+      <div class="tab-body">
+        <span class="eyebrow tone-seafoam">Specialized Industry Services</span>
+        <h2>Deep knowledge of your industry, not just your bracket</h2>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <div class="card-photo is-interactive">
+        <img src="{{ '/assets/img/photos/land-clearing.jpg' | relative_url }}" alt="Construction site work">
+        <div class="card-photo-body">
+          <h3>Construction</h3>
+          <p>Building from the ground up? We'll make sure your books and your tax strategy are just as solid as your foundation.</p>
+        </div>
+      </div>
+      <div class="card-photo is-interactive">
+        <img src="{{ '/assets/img/photos/flatirons-fog.jpg' | relative_url }}" alt="Colorado Front Range mountains">
+        <div class="card-photo-body">
+          <h3>High Net Worth</h3>
+          <p>Retirement ready? We'll craft a holistic plan that maximizes tax efficiency across your full portfolio, not just this year's return.</p>
+        </div>
+      </div>
+      <div class="card-photo is-interactive">
+        <img src="{{ '/assets/img/photos/aerial-feedlot.jpg' | relative_url }}" alt="Aerial view of a Colorado feedlot and farmland">
+        <div class="card-photo-body">
+          <h3>Agriculture</h3>
+          <p>Got milk? We know coops, crop production, feedlots, dairies, and cow-calf operations &mdash; and the tax strategies built for them.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -64,39 +118,7 @@ description: "Accounting and bookkeeping, tax preparation and planning, and busi
 <section class="band-tan">
   <div class="container">
     <div class="section-header center">
-      <span class="eyebrow">Specialized Industry Services</span>
-      <h2>Deep knowledge of your industry, not just your bracket</h2>
-    </div>
-    <div class="grid grid-3">
-      <div class="card-photo">
-        <img src="{{ '/assets/img/photos/land-clearing.jpg' | relative_url }}" alt="Construction site work">
-        <div class="card-photo-body">
-          <h3>Construction</h3>
-          <p>Building from the ground up? Let's make sure you have a solid foundation.</p>
-        </div>
-      </div>
-      <div class="card-photo">
-        <img src="{{ '/assets/img/photos/flatirons-fog.jpg' | relative_url }}" alt="Colorado Front Range mountains">
-        <div class="card-photo-body">
-          <h3>High Net Worth</h3>
-          <p>Retirement ready? Let's craft a holistic plan to maximize tax efficiencies in your portfolio.</p>
-        </div>
-      </div>
-      <div class="card-photo">
-        <img src="{{ '/assets/img/photos/aerial-feedlot.jpg' | relative_url }}" alt="Aerial view of a Colorado feedlot and farmland">
-        <div class="card-photo-body">
-          <h3>Agriculture</h3>
-          <p>Got milk? Let's weigh in on valuable tax and business strategies specific to farmers &mdash; coops, crop production, feedlots, dairies, and cow-calf operations.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-header center">
-      <span class="eyebrow">Also Serving</span>
+      <span class="eyebrow tone-seafoam">Also Serving</span>
       <h2>Industries &amp; business types</h2>
     </div>
     <ul class="tag-list" style="justify-content:center;">
@@ -118,7 +140,7 @@ description: "Accounting and bookkeeping, tax preparation and planning, and busi
       <h2>Not sure where to start?</h2>
       <p>Tell us about your situation and we'll point you in the right direction.</p>
       <div class="btn-row" style="justify-content:center; margin-top:24px;">
-        <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary">Schedule a Consultation</a>
+        <a href="{{ '/contact/' | relative_url }}" class="btn btn-accent btn-lg">Schedule a Consultation</a>
       </div>
     </div>
   </div>
