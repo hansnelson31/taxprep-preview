@@ -110,7 +110,7 @@ body {
   background: var(--surface-page);
   background-image: url('../img/textures/paper-tan.jpg');
   background-repeat: repeat;
-  background-size: 900px auto;
+  background-size: 600px auto;
   line-height: 1.6;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
