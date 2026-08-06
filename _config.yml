@@ -1,0 +1,11 @@
+title: HGN Tax Prep
+description: "Tax preparation, accounting, and business advisory services in Severance, Colorado. Right on the money."
+url: "https://www.hgn.tax"
+baseurl: ""
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+exclude:
+  - README.md

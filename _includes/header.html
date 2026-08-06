@@ -1,0 +1,41 @@
+<header class="site-header">
+  <div class="container">
+    <a href="{{ '/' | relative_url }}" class="site-logo">
+      <img src="{{ '/assets/img/logo/hgn-full-color.svg' | relative_url }}" alt="HGN Tax Prep">
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <div class="nav-dropdown" id="portalDropdown">
+        <a href="#" id="portalToggle">Client Portal &#9662;</a>
+        <div class="nav-dropdown-menu">
+          <a href="https://portal.hgn.tax" target="_blank" rel="noopener">Client Portal</a>
+          <a href="https://buy.stripe.com/3cscOXfyy49Ybmw000" target="_blank" rel="noopener">Pay Invoice</a>
+        </div>
+      </div>
+      <a href="{{ '/about/' | relative_url }}">About</a>
+      <a href="{{ '/services/' | relative_url }}">Services</a>
+      <a href="{{ '/resources/' | relative_url }}">Resources</a>
+      <a href="{{ '/contact/' | relative_url }}">Contact</a>
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary nav-cta">Free Consultation</a>
+    </nav>
+  </div>
+</header>
+<script>
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    toggle.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    var portalDropdown = document.getElementById('portalDropdown');
+    var portalToggle = document.getElementById('portalToggle');
+    portalToggle.addEventListener('click', function (e) {
+      if (window.matchMedia('(max-width: 860px)').matches) {
+        e.preventDefault();
+        portalDropdown.classList.toggle('open');
+      }
+    });
+  })();
+</script>
