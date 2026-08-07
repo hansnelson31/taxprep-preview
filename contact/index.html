@@ -5,51 +5,49 @@ description: "Call, email, or schedule a free initial consultation with HGN Tax 
 ---
 
 <section class="hero hero-sm" style="background-image: url('{{ "/assets/img/photos/lake-boardwalk-sunset.jpg" | relative_url }}');">
-  <div class="container">
-    <span class="eyebrow">Contact</span>
+  <div class="container-xl">
+    <span class="eyebrow tone-onDark">Contact</span>
     <h1>Let's talk.</h1>
-    <p class="lede">In order to best serve you, we'd like to know the context of your situation &mdash; so give us a call, send an email, or schedule your free initial phone consultation below.</p>
+    <p class="lead">In order to best serve you, we'd like to know the context of your situation &mdash; so give us a call, send an email, or schedule your free initial phone consultation below.</p>
   </div>
 </section>
 
 <section>
-  <div class="container contact-grid">
-    <div>
+  <div class="container">
+    <div class="section-header center">
+      <span class="eyebrow tone-seafoam">Book Online</span>
       <h2>Schedule a Consultation</h2>
-      <!--
-        TODO (Hans): sign up for a free account at https://formspree.io using hans@hgn.tax,
-        create a new form, and replace YOUR_FORM_ID below with the endpoint ID Formspree gives you.
-        Until then this form will not actually deliver anywhere.
-      -->
-      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" name="phone">
-
-        <label for="message">What's going on? Tell us about your situation.</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-
-        <button type="submit" class="btn btn-primary">Send</button>
-        <p class="form-note">To send a message securely, visit the <a href="https://portal.hgn.tax/login" target="_blank" rel="noopener">client portal</a> instead &mdash; messages there are encrypted.</p>
-      </form>
     </div>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/hgntax/tax-consultation" style="min-width:280px; height:700px; margin-bottom:32px;"></div>
+    <p class="form-note" style="text-align:center; margin-top:32px;">Calendar not loading? Book directly at <a href="https://calendly.com/hgntax/tax-consultation" target="_blank" rel="noopener">calendly.com/hgntax</a>, or reach out using the details below.</p>
+  </div>
+</section>
 
-    <div>
-      <h2>Ways to Contact Us</h2>
-      <ul class="contact-info-list">
-        <li><span class="label">Phone</span><a href="tel:+19704606676">(970) 460-6676</a></li>
-        <li><span class="label">Fax</span>(970) 717-4728</li>
-        <li><span class="label">Email</span><a href="mailto:hans@hgn.tax">hans@hgn.tax</a></li>
-        <li><span class="label">Mailing Address</span>PO Box 161, Severance, CO 80546</li>
-        <li><span class="label">Business Hours</span>9am&ndash;6pm, Monday to Friday</li>
-      </ul>
-      <div style="margin-top:28px;">
-        <a href="https://portal.hgn.tax" target="_blank" rel="noopener" class="btn btn-outline-dark">Client Portal Login</a>
+<section class="band-tan">
+  <div class="container-xl">
+    <div class="tab-divider">
+      <span class="tab-num">02</span>
+      <span class="tab-rule"></span>
+      <div class="tab-body">
+        <span class="eyebrow tone-seafoam">Get In Touch</span>
+        <h2>Ways to contact us</h2>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <ul class="contact-info-list">
+          <li><span class="label">Phone</span><a href="tel:+19704606676">(970) 460-6676</a></li>
+          <li><span class="label">Fax</span>(970) 717-4728</li>
+          <li><span class="label">Email</span><a href="mailto:hans@hgn.tax">hans@hgn.tax</a></li>
+          <li><span class="label">Mailing Address</span>PO Box 161, Severance, CO 80546</li>
+          <li><span class="label">Business Hours</span>9am&ndash;6pm, Monday to Friday</li>
+        </ul>
+      </div>
+      <div>
+        <p>To send a message securely, visit the client portal instead &mdash; messages there are encrypted.</p>
+        <div class="btn-row">
+          <a href="https://portal.hgn.tax/login" target="_blank" rel="noopener" class="btn btn-outline">Client Portal Login</a>
+        </div>
       </div>
     </div>
   </div>

@@ -1,13 +1,12 @@
 ---
 layout: base
-title: S Corp vs. Sole Prop Savings | HGN Tax Prep
-description: "A simple illustration of how S Corp election can reduce self-employment tax compared to a sole proprietorship."
-draft: true
+title: S Corp vs. Sole Prop Savings Calculator | HGN Tax Prep
+description: "Model the real advantage of an S corp election — including overhead costs, payroll taxes, QBI, basis risk, and SSTB impacts."
 ---
 
 <section class="hero hero-sm">
-  <div class="container">
-    <span class="eyebrow">Tax Guide <span class="draft-badge">Draft</span></span>
+  <div class="container-xl">
+    <span class="eyebrow tone-onDark">Tax Guide</span>
     <h1>S Corp vs. Sole Prop: where the savings come from</h1>
   </div>
 </section>
@@ -15,11 +14,7 @@ draft: true
 <section>
   <div class="container prose">
     <a href="{{ '/resources/' | relative_url }}" class="back-link">&larr; Back to Resources</a>
-    {% include draft-banner.html %}
 
-    <p>The original version of this page was a savings calculator. This draft explains the math behind it instead &mdash; an interactive version can be rebuilt once the numbers below are reviewed.</p>
-
-    <h2>The core difference</h2>
     <p>As a sole proprietor, all of your net business profit is subject to self-employment tax (Social Security + Medicare, currently 15.3% up to the Social Security wage base, 2.9%+ above it). As an S Corp, only your W-2 salary is subject to payroll tax &mdash; distributions above that salary are not.</p>
 
     <h2>Illustrative example</h2>
@@ -34,13 +29,963 @@ draft: true
     <p>The IRS doesn't let you set your salary to $1 and take everything else as a distribution. Your salary needs to reflect what someone else would reasonably be paid to do your job. This is the single most scrutinized number in an S Corp return, and it's not a DIY guess &mdash; it should be benchmarked against your role, industry, and hours.</p>
 
     <h2>Where the break-even usually sits</h2>
-    <p>Below a certain profit level, the added cost of payroll processing, unemployment insurance, and a separate corporate return can outweigh the self-employment tax savings. Above that level, the savings tend to outpace the added costs. Where exactly that line falls depends on your state, your industry's reasonable-comp benchmarks, and your actual expenses &mdash; which is why this needs to be run as an actual calculation, not a rule of thumb.</p>
+    <p>Below a certain profit level, the added cost of payroll processing, unemployment insurance, and a separate corporate return can outweigh the self-employment tax savings. Above that level, the savings tend to outpace the added costs. Run your own numbers below.</p>
+  </div>
+</section>
 
-    <div class="cta-banner" style="margin-top:3em;">
-      <h2>Want your actual numbers run?</h2>
-      <div class="btn-row" style="justify-content:center; margin-top:20px;">
-        <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary">Schedule a Consultation</a>
+<section class="band-tan">
+  <div class="container-xl">
+    <div class="section-header center">
+      <span class="eyebrow tone-seafoam">Run The Numbers</span>
+      <h2>S Corp Tax Savings Calculator</h2>
+      <p style="max-width:640px; margin:0 auto;">Model the real advantage of an S corp election &mdash; including all overhead costs, payroll taxes, lost QBI, basis risk, and SSTB impacts.</p>
+    </div>
+
+    <div class="sc-calc">
+      <div class="wrap">
+        <div class="grid-2">
+
+          <!-- BUSINESS PROFILE -->
+          <div class="card">
+            <div class="card-title">Business Profile</div>
+            <div class="fg">
+              <label>Net Business Profit (before owner pay &amp; payroll taxes)</label>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="netProfit" value="150000" min="0" step="1000" oninput="calc()">
+              </div>
+              <div class="hint">Your Schedule C net income, or projected S corp net profit before salary</div>
+            </div>
+            <div class="fg">
+              <label>Filing Status</label>
+              <div class="tgrp" id="fsGrp">
+                <button class="tbtn on" onclick="setFS('single',this)">Single</button>
+                <button class="tbtn" onclick="setFS('mfj',this)">Married (MFJ)</button>
+                <button class="tbtn" onclick="setFS('hoh',this)">Head of Household</button>
+              </div>
+            </div>
+            <div class="fg">
+              <label>Other Household Income (spouse wages, investments, etc.)</label>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="otherIncome" value="0" min="0" step="1000" oninput="calc()">
+              </div>
+              <div class="hint">Stacks on top of business income &mdash; affects bracket and &sect;199A phase-out</div>
+            </div>
+            <div class="fg">
+              <label>State Income Tax Rate</label>
+              <div class="sfx"><span class="sym">%</span>
+                <input type="number" id="stateRate" value="5.0" min="0" max="15" step="0.1" oninput="calc()">
+              </div>
+              <div class="hint">Enter 0 for TX, FL, WA, NV, SD, WY, AK. Approximation &mdash; actual liability varies</div>
+            </div>
+            <div class="fg">
+              <label>Tax Year</label>
+              <select id="taxYear" onchange="calc()">
+                <option value="2025" selected>2025 (filing now)</option>
+                <option value="2026">2026 (planning ahead)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- BUSINESS TYPE -->
+          <div class="card">
+            <div class="card-title">Business Type &amp; SSTB Status</div>
+            <div class="fg">
+              <label>Industry</label>
+              <select id="industry" onchange="industryChange()">
+                <option value="general">General Business / Retail / E-commerce</option>
+                <option value="tech">Technology / Software</option>
+                <option value="realestate">Real Estate</option>
+                <option value="farming">Farming / Agriculture</option>
+                <option value="construction">Construction / Contracting</option>
+                <option value="medical">Medical / Dental / Healthcare (SSTB)</option>
+                <option value="legal">Legal Services (SSTB)</option>
+                <option value="accounting">Accounting / CPA Firm (SSTB)</option>
+                <option value="consulting">Consulting / Business Coaching (SSTB)</option>
+                <option value="financial">Financial Services / Wealth Mgmt (SSTB)</option>
+                <option value="arts">Performing Arts / Athletics (SSTB)</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>&sect;199A SSTB Classification</label>
+              <div class="tgrp" id="sstbGrp">
+                <button class="tbtn on" onclick="setSST('no',this)">Not an SSTB</button>
+                <button class="tbtn" onclick="setSST('yes',this)">SSTB</button>
+              </div>
+            </div>
+            <div id="sstbBox" class="notice warn" style="display:none;">
+              <strong>Specified Service Trade or Business (SSTB)</strong>
+              If your taxable income exceeds the &sect;199A upper threshold, your QBI deduction is <strong>completely eliminated</strong>. This is a critical factor in the S corp vs. sole prop decision for professional service firms.
+            </div>
+            <div id="capitalBox" class="notice info" style="display:none;">
+              <strong>Capital-Heavy Business Detected</strong>
+              Farming and construction businesses often carry high debt (operating loans, equipment notes, customer deposits). In an S corp, entity-level debt does <strong>not</strong> increase your stock basis &mdash; unlike a partnership/LLC taxed as a partnership. Enable Basis Analysis below to model excess-distribution risk.
+            </div>
+          </div>
+
+          <!-- S CORP COSTS -->
+          <div class="card">
+            <div class="card-title">Annual S Corp Overhead Costs</div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>Additional Accounting / CPA Fees</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">Extra cost above sole prop. S corps require Form 1120-S, quarterly payroll deposits, W-2s, and more complex books. Typical range: $2,000&ndash;$6,000/yr.</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="accountingFees" value="3000" min="0" step="250" oninput="calc()">
+              </div>
+            </div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>Payroll Processing Service</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">Gusto, Rippling, ADP, etc. to handle owner payroll, tax deposits, and W-2 filing. Typical range: $500&ndash;$1,800/yr.</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="payrollFees" value="900" min="0" step="100" oninput="calc()">
+              </div>
+            </div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>State Annual Report &amp; Franchise Fees</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">Most states charge annual fees to keep corporate status active &mdash; from $25 to $800+. Includes registered agent (~$100&ndash;$300/yr). CA adds an $800 minimum franchise tax.</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="stateFees" value="400" min="0" step="50" oninput="calc()">
+              </div>
+            </div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>Other Admin (banking, meetings, compliance)</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">Annual meeting documentation, corporate resolutions, separate business banking, shareholder agreement updates, etc.</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="otherAdmin" value="300" min="0" step="100" oninput="calc()">
+              </div>
+            </div>
+            <div id="totalOverheadBox" class="notice info" style="margin-top:.75rem;">
+              <strong>Total Annual S Corp Overhead: <span id="overheadTotal">$0</span></strong>
+              This is the fixed cost hurdle your FICA savings must beat to make the S corp worthwhile.
+            </div>
+          </div>
+
+          <!-- SALARY & PAYROLL -->
+          <div class="card">
+            <div class="card-title">Owner Salary &amp; Employment Taxes</div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>Reasonable Owner Salary (W-2)</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">IRS requires a "reasonable salary" for services performed. Too low = audit risk and potential recharacterization + penalties. Common safe range: 40&ndash;60% of net profit for service businesses. Document your methodology.</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="ownerSalary" value="60000" min="0" step="1000" oninput="calc()">
+              </div>
+              <div class="salary-meter">
+                <div class="meter-track"><div class="meter-fill" id="salaryMeter"></div></div>
+                <div class="hint" id="salaryHint"></div>
+              </div>
+            </div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>State Unemployment (SUTA) Rate</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">Your state's employer unemployment tax rate. New employer rates typically range from 1%&ndash;4%. Check your state's labor department for your rate.</div>
+                </div>
+              </div>
+              <div class="sfx"><span class="sym">%</span>
+                <input type="number" id="sutaRate" value="2.7" min="0" max="15" step="0.1" oninput="calc()">
+              </div>
+            </div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>SUTA Taxable Wage Base</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">Maximum wages subject to SUTA per employee. Ranges from $7,000 (CA, AZ) to $68,500 (WA). Look up your specific state.</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="sutaBase" value="14000" min="7000" step="1000" oninput="calc()">
+              </div>
+            </div>
+            <div class="fg">
+              <div class="lbl-row">
+                <label>Other Employee W-2 Wages (non-owner)</label>
+                <div class="tip"><div class="tip-icon">i</div>
+                  <div class="tip-box">W-2 wages paid to employees other than the owner. These count toward the &sect;199A W-2 wage limitation test &mdash; higher total wages support a larger QBI deduction once income enters the phase-out range. Does not include owner salary (entered above).</div>
+                </div>
+              </div>
+              <div class="pfx"><span class="sym">$</span>
+                <input type="number" id="employeeW2" value="0" min="0" step="1000" oninput="calc()">
+              </div>
+              <div class="hint">Total W-2 for &sect;199A = owner salary + this amount</div>
+            </div>
+            <div class="mini-table">
+              <div class="mini-title">Employer Payroll Tax Breakdown</div>
+              <div class="mini-row"><span class="lbl">Social Security (6.2%, up to SS wage base)</span><span class="val" id="mEmpSS">&mdash;</span></div>
+              <div class="mini-row"><span class="lbl">Medicare (1.45%)</span><span class="val" id="mEmpMed">&mdash;</span></div>
+              <div class="mini-row"><span class="lbl">FUTA (0.6% on first $7,000)</span><span class="val" id="mFUTA">&mdash;</span></div>
+              <div class="mini-row"><span class="lbl">SUTA (state unemployment)</span><span class="val" id="mSUTA">&mdash;</span></div>
+              <div class="mini-row"><span class="lbl">Total Employer Payroll Taxes</span><span class="val" id="mEmpTotal">&mdash;</span></div>
+            </div>
+          </div>
+
+          <!-- BASIS ANALYSIS -->
+          <div class="card span-2">
+            <div class="collapse-hdr" id="basisHdr" onclick="toggleBasis()">
+              <div class="card-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0;">
+                Basis &amp; Excess Distribution Analysis
+                <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:.5rem;">(Farming, Construction &amp; Capital-Heavy Businesses)</span>
+              </div>
+              <span class="chevron">&#9660;</span>
+            </div>
+            <div class="collapse-body" id="basisBody">
+              <div class="notice warn" style="margin-bottom:1rem;">
+                <strong>Why This Matters</strong>
+                In an S corp, only loans you personally make <em>to</em> the corporation create debt basis. Entity-level bank loans (operating lines, equipment notes) do <strong>not</strong> flow through to increase your stock basis &mdash; unlike a partnership. If cumulative distributions exceed your stock + debt basis, the excess is taxed as capital gain (not ordinary income). For farmers with $400K equipment loans or contractors funded by customer deposits, this can be a significant issue.
+              </div>
+              <div class="grid-2">
+                <div>
+                  <div class="fg">
+                    <div class="lbl-row">
+                      <label>Estimated Current Stock Basis</label>
+                      <div class="tip"><div class="tip-icon">i</div>
+                        <div class="tip-box">Initial investment + cumulative S corp income - cumulative losses - prior distributions. For a converted LLC or new S corp, this is often just your initial equity contribution.</div>
+                      </div>
+                    </div>
+                    <div class="pfx"><span class="sym">$</span>
+                      <input type="number" id="stockBasis" value="50000" min="0" step="5000" oninput="calc()">
+                    </div>
+                  </div>
+                  <div class="fg">
+                    <div class="lbl-row">
+                      <label>Debt Basis (Personal Loans Made TO the Corp)</label>
+                      <div class="tip"><div class="tip-icon">i</div>
+                        <div class="tip-box">If you personally loaned money to your S corp (on a promissory note), that creates debt basis. Bank loans guaranteed by you but taken by the corp do NOT count.</div>
+                      </div>
+                    </div>
+                    <div class="pfx"><span class="sym">$</span>
+                      <input type="number" id="debtBasis" value="0" min="0" step="5000" oninput="calc()">
+                    </div>
+                  </div>
+                  <div class="fg">
+                    <div class="lbl-row">
+                      <label>Unadjusted Basis of Qualified Property (UBIA)</label>
+                      <div class="tip"><div class="tip-icon">i</div>
+                        <div class="tip-box">The original purchase cost of tangible depreciable property held by the S corp (equipment, machinery, buildings) &mdash; not reduced for depreciation. Used in the &sect;199A alternative W-2 test: max(50% of W-2 wages, 25% of W-2 wages + 2.5% of UBIA). Critical for capital-heavy businesses like farming and construction with large equipment bases but relatively low W-2 wages.</div>
+                      </div>
+                    </div>
+                    <div class="pfx"><span class="sym">$</span>
+                      <input type="number" id="ubia" value="0" min="0" step="10000" oninput="calc()">
+                    </div>
+                    <div class="hint">Original cost of equipment/property (not depreciated value) &middot; Supports higher &sect;199A deduction at incomes above the phase-out threshold</div>
+                  </div>
+                  <div class="fg">
+                    <div class="lbl-row">
+                      <label>Planned Annual Distribution</label>
+                      <div class="tip"><div class="tip-icon">i</div>
+                        <div class="tip-box">Leave at 0 to auto-use the S corp's net income as the distribution. Enter a HIGHER amount to model capital-heavy scenarios &mdash; e.g., a farmer taking $200K out while the S corp only earned $80K (funded by an operating line of credit). The excess tests your basis.</div>
+                      </div>
+                    </div>
+                    <div class="pfx"><span class="sym">$</span>
+                      <input type="number" id="plannedDist" value="0" min="0" step="5000" oninput="calc()">
+                    </div>
+                    <div class="hint">Enter 0 to auto-calculate &middot; Enter a larger amount to model debt-funded distributions (farming operating loans, construction deposits, etc.)</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="fg">
+                    <label>Your Long-Term Capital Gains Rate</label>
+                    <div class="tgrp" id="ltcgGrp">
+                      <button class="tbtn" onclick="setLTCG(0,this)">0%</button>
+                      <button class="tbtn on" onclick="setLTCG(15,this)">15%</button>
+                      <button class="tbtn" onclick="setLTCG(20,this)">20%</button>
+                    </div>
+                    <div class="hint">Applies to any excess distribution above your basis (taxed as capital gain, not ordinary income &mdash; which can actually be a benefit if rates are lower)</div>
+                  </div>
+                  <div id="basisResult" class="notice info" style="margin-top:.75rem; display:none;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULTS -->
+          <div class="card span-2" id="resultsCard">
+            <div class="results-hdr">Tax Comparison Results</div>
+            <div id="savingsBanner" class="savings-banner pos">
+              <div class="big" id="savingsNum">&mdash;</div>
+              <div class="lbl" id="savingsLbl">&mdash;</div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi"><div class="val" id="kpiSPRate">&mdash;</div><div class="lbl">Sole Prop<br>Effective Tax Rate</div></div>
+              <div class="kpi"><div class="val" id="kpiSCRate">&mdash;</div><div class="lbl">S Corp<br>Effective Tax Rate</div></div>
+              <div class="kpi"><div class="val" id="kpiFICASave">&mdash;</div><div class="lbl">FICA/SE Tax<br>Savings (Gross)</div></div>
+              <div class="kpi"><div class="val" id="kpiOverhead">&mdash;</div><div class="lbl">S Corp<br>Overhead Cost</div></div>
+              <div class="kpi"><div class="val" id="kpiBreakeven">&mdash;</div><div class="lbl">Approx. Break-Even<br>Net Profit</div></div>
+            </div>
+            <div class="tbl-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:38%">Line Item</th>
+                    <th>Sole Proprietor</th>
+                    <th>S Corporation</th>
+                    <th>Difference</th>
+                  </tr>
+                </thead>
+                <tbody id="tblBody"></tbody>
+              </table>
+            </div>
+            <div id="warningsArea" style="margin-top:1.25rem;"></div>
+          </div>
+
+        </div>
+      </div>
+      <div class="site-footer">
+        <p>For educational and planning purposes only &mdash; not tax advice. Consult a qualified CPA before making an S corp election.</p>
+        <p style="margin-top:.3rem;">Uses 2025 federal tax parameters (2026 figures are estimated). State taxes are simplified approximations.</p>
       </div>
     </div>
   </div>
 </section>
+
+<section>
+  <div class="container">
+    <div class="cta-banner">
+      <h2>Want your actual numbers run?</h2>
+      <div class="btn-row" style="justify-content:center; margin-top:20px;">
+        <a href="https://calendly.com/hgntax/tax-consultation" target="_blank" rel="noopener" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hgntax/tax-consultation'});return false;" class="btn btn-primary">Schedule a Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ==========================================================================
+   S Corp calculator — scoped under .sc-calc so it can't leak into or be
+   overridden by sitewide styles. All tax-calculation JS below is unchanged
+   from the original tool; only visuals were remapped to the brand tokens
+   defined in assets/css/style.css.
+   ========================================================================== */
+.sc-calc {
+  --primary: var(--denim-700);
+  --primary-lt: var(--green-700);
+  --accent: var(--burnt-600);
+  --green: var(--green-700);
+  --red: #C0392B;
+  --orange: var(--burnt-600);
+  --bg: transparent;
+  --card: var(--surface-card);
+  --border: var(--border-default);
+  --text: var(--text-body);
+  --muted: var(--text-subtle);
+  font-family: var(--font-sans);
+  color: var(--text);
+}
+.sc-calc * { box-sizing: border-box; }
+.sc-calc .wrap { max-width: 1140px; margin: 0 auto; min-width: 0; }
+.sc-calc .grid-2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.25rem; min-width: 0; }
+.sc-calc .span-2 { grid-column: 1 / -1; }
+@media (max-width: 768px) { .sc-calc .grid-2 { grid-template-columns: minmax(0, 1fr); } .sc-calc .span-2 { grid-column: 1; } }
+
+.sc-calc .card { background: var(--card); color: var(--text); border-radius: var(--r-lg); padding: 1.4rem 1.5rem; border: 1px solid var(--border); box-shadow: var(--shadow-md); margin-bottom: 0; min-width: 0; }
+.sc-calc .card-title { font-size: 1rem; font-weight: 700; color: var(--primary); padding-bottom: .7rem; margin-bottom: 1.1rem; border-bottom: 2.5px solid var(--accent); display: flex; align-items: center; gap: .45rem; }
+
+.sc-calc .fg { margin-bottom: .95rem; }
+.sc-calc .fg:last-child { margin-bottom: 0; }
+.sc-calc label { display: block; font-size: .82rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+.sc-calc .lbl-row { display: flex; align-items: center; gap: .35rem; }
+.sc-calc input[type="number"], .sc-calc select {
+  width: 100%; padding: .55rem .75rem; border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); font-size: .9rem; color: var(--text); background: #fff;
+  font-family: var(--font-sans);
+  transition: border-color .18s;
+}
+.sc-calc input[type="number"]:focus, .sc-calc select:focus { outline: none; border-color: var(--primary-lt); box-shadow: var(--focus-ring); }
+.sc-calc .pfx { position: relative; }
+.sc-calc .pfx .sym { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .88rem; pointer-events: none; }
+.sc-calc .pfx input { padding-left: 1.45rem; }
+.sc-calc .sfx { position: relative; }
+.sc-calc .sfx .sym { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .88rem; pointer-events: none; }
+.sc-calc .sfx input { padding-right: 2rem; }
+.sc-calc .hint { font-size: .74rem; color: var(--muted); margin-top: .22rem; line-height: 1.4; }
+
+.sc-calc .tgrp { display: flex; flex-wrap: wrap; gap: .4rem; }
+.sc-calc .tbtn {
+  padding: .42rem .95rem; border: 1.5px solid var(--border);
+  border-radius: var(--r-pill); background: #fff; cursor: pointer;
+  font-size: .82rem; font-weight: 500; color: var(--muted);
+  font-family: var(--font-sans);
+  transition: all .15s;
+}
+.sc-calc .tbtn:hover { border-color: var(--primary-lt); color: var(--primary); }
+.sc-calc .tbtn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+.sc-calc .tip { position: relative; display: inline-flex; align-items: center; cursor: default; }
+.sc-calc .tip-icon { width: 15px; height: 15px; border-radius: 50%; background: var(--primary-lt); color: #fff; font-size: .6rem; display: inline-flex; align-items: center; justify-content: center; font-style: italic; font-weight: 700; }
+.sc-calc .tip-box { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: var(--denim-900); color: #fff; padding: .55rem .75rem; border-radius: var(--r-sm); font-size: .74rem; width: 240px; line-height: 1.45; z-index: 200; pointer-events: none; }
+.sc-calc .tip-box::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--denim-900); }
+.sc-calc .tip:hover .tip-box { display: block; }
+
+.sc-calc .notice { border-radius: var(--r-sm); padding: .7rem 1rem; font-size: .82rem; line-height: 1.5; margin-top: .75rem; }
+.sc-calc .notice strong { display: block; margin-bottom: .2rem; }
+.sc-calc .notice.warn { background: var(--burnt-100); border-left: 4px solid var(--orange); }
+.sc-calc .notice.danger { background: #FBEAE7; border-left: 4px solid var(--red); }
+.sc-calc .notice.info { background: var(--denim-100); border-left: 4px solid var(--primary-lt); }
+.sc-calc .notice.success { background: var(--green-100); border-left: 4px solid var(--green); }
+
+.sc-calc .mini-table { margin-top: .9rem; }
+.sc-calc .mini-title { font-size: .8rem; font-weight: 700; color: var(--primary); margin-bottom: .5rem; }
+.sc-calc .mini-row { display: flex; justify-content: space-between; gap: .5rem; padding: .35rem 0; border-bottom: 1px solid var(--grain-100); font-size: .81rem; }
+.sc-calc .mini-row:last-child { border-bottom: none; font-weight: 700; }
+.sc-calc .mini-row .lbl { color: var(--muted); min-width: 0; }
+.sc-calc .mini-row .val { font-weight: 500; flex-shrink: 0; }
+
+.sc-calc .results-hdr { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--primary); text-align: center; margin-bottom: 1.25rem; }
+
+.sc-calc .savings-banner { text-align: center; padding: 1.5rem; border-radius: var(--r-lg); margin-bottom: 1.5rem; }
+.sc-calc .savings-banner.pos { background: var(--green-100); border: 2px solid var(--green); }
+.sc-calc .savings-banner.neg { background: #FBEAE7; border: 2px solid var(--red); }
+.sc-calc .savings-banner .big { font-size: 2.6rem; font-weight: 900; line-height: 1; font-family: var(--font-serif); }
+.sc-calc .savings-banner .lbl { font-size: .88rem; margin-top: .3rem; opacity: .8; }
+
+.sc-calc .kpi-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.sc-calc .kpi { text-align: center; background: var(--grain-50); border: 1px solid var(--border); border-radius: var(--r-md); padding: .8rem 1.2rem; min-width: 130px; }
+.sc-calc .kpi .val { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+.sc-calc .kpi .lbl { font-size: .72rem; color: var(--muted); margin-top: .15rem; line-height: 1.3; }
+
+.sc-calc .tbl-wrap { overflow-x: auto; }
+.sc-calc table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.sc-calc thead th { background: var(--primary); color: #fff; padding: .7rem 1rem; text-align: right; font-weight: 600; }
+.sc-calc thead th:first-child { text-align: left; border-radius: var(--r-sm) 0 0 0; }
+.sc-calc thead th:last-child { border-radius: 0 var(--r-sm) 0 0; }
+.sc-calc tbody td { padding: .6rem 1rem; text-align: right; border-bottom: 1px solid var(--grain-100); }
+.sc-calc tbody td:first-child { text-align: left; color: var(--muted); font-size: .8rem; }
+.sc-calc tbody tr:hover td { background: var(--grain-50); }
+.sc-calc .sec-hdr td { background: var(--grain-100) !important; color: var(--primary) !important; font-weight: 700 !important; font-size: .78rem !important; text-align: left !important; padding: .45rem 1rem !important; letter-spacing: .03em; }
+.sc-calc .total-row td { font-weight: 700; background: var(--grain-100) !important; border-top: 2px solid var(--primary); font-size: .9rem; color: var(--text) !important; }
+.sc-calc .net-row td { font-weight: 800; font-size: .95rem; }
+.sc-calc .net-row.pos td { background: var(--green-100) !important; color: var(--green) !important; }
+.sc-calc .net-row.neg td { background: #FBEAE7 !important; color: var(--red) !important; }
+.sc-calc .diff-pos { color: var(--green); font-weight: 600; }
+.sc-calc .diff-neg { color: var(--red); font-weight: 600; }
+.sc-calc .diff-0 { color: var(--muted); }
+
+.sc-calc .section-label { font-size: .75rem; color: var(--text-subtle); display: block; }
+
+.sc-calc .salary-meter { margin-top: .6rem; }
+.sc-calc .meter-track { background: var(--grain-300); border-radius: 4px; height: 6px; overflow: hidden; margin-bottom: .25rem; }
+.sc-calc .meter-fill { height: 100%; border-radius: 4px; transition: width .3s; }
+.sc-calc .meter-fill.ok { background: var(--green); }
+.sc-calc .meter-fill.warn { background: var(--orange); }
+.sc-calc .meter-fill.bad { background: var(--red); }
+
+.sc-calc .collapse-hdr { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+.sc-calc .collapse-hdr .chevron { transition: transform .2s; font-size: .8rem; }
+.sc-calc .collapse-hdr.open .chevron { transform: rotate(180deg); }
+.sc-calc .collapse-body { display: none; margin-top: 1rem; }
+.sc-calc .collapse-body.open { display: block; }
+
+.sc-calc .site-footer { text-align: center; padding: 2rem 1rem 0; color: var(--muted); font-size: .77rem; margin-top: 1rem; }
+</style>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  TAX PARAMETERS
+// ══════════════════════════════════════════════════════════
+const PARAMS = {
+  2025: {
+    ssBase: 176100,
+    stdDed: { single: 15000, mfj: 30000, hoh: 22500 },
+    qbiLow: { single: 197300, mfj: 394600, hoh: 197300 },
+    qbiHigh:{ single: 247300, mfj: 494600, hoh: 247300 },
+    addlMedThresh: { single: 200000, mfj: 250000, hoh: 200000 },
+    brackets: {
+      single: [[0,11925,.10],[11925,48475,.12],[48475,103350,.22],[103350,197300,.24],[197300,250525,.32],[250525,626350,.35],[626350,Infinity,.37]],
+      mfj:    [[0,23850,.10],[23850,96950,.12],[96950,206700,.22],[206700,394600,.24],[394600,501050,.32],[501050,751600,.35],[751600,Infinity,.37]],
+      hoh:    [[0,17000,.10],[17000,64850,.12],[64850,103350,.22],[103350,197300,.24],[197300,250500,.32],[250500,626350,.35],[626350,Infinity,.37]]
+    }
+  },
+  2026: {
+    ssBase: 180000,
+    stdDed: { single: 15350, mfj: 30700, hoh: 23100 },
+    qbiLow: { single: 202550, mfj: 405100, hoh: 202550 },
+    qbiHigh:{ single: 252550, mfj: 505100, hoh: 252550 },
+    addlMedThresh: { single: 200000, mfj: 250000, hoh: 200000 },
+    brackets: {
+      single: [[0,12200,.10],[12200,49600,.12],[49600,105850,.22],[105850,202550,.24],[202550,256400,.32],[256400,641100,.35],[641100,Infinity,.37]],
+      mfj:    [[0,24400,.10],[24400,99200,.12],[99200,211700,.22],[211700,405100,.24],[405100,512800,.32],[512800,769400,.35],[769400,Infinity,.37]],
+      hoh:    [[0,17400,.10],[17400,66400,.12],[66400,105850,.22],[105850,202550,.24],[202550,256350,.32],[256350,641050,.35],[641050,Infinity,.37]]
+    }
+  }
+};
+
+// ══════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════
+let filing = 'single';
+let isSSTB = false;
+let ltcgRate = 15;
+let basisOpen = false;
+
+function setFS(f, btn) {
+  filing = f;
+  document.querySelectorAll('#fsGrp .tbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  calc();
+}
+
+function setSST(v, btn) {
+  isSSTB = (v === 'yes');
+  document.querySelectorAll('#sstbGrp .tbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('sstbBox').style.display = isSSTB ? 'block' : 'none';
+  calc();
+}
+
+function setLTCG(r, btn) {
+  ltcgRate = r;
+  document.querySelectorAll('#ltcgGrp .tbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  calc();
+}
+
+function toggleBasis() {
+  basisOpen = !basisOpen;
+  document.getElementById('basisHdr').classList.toggle('open', basisOpen);
+  document.getElementById('basisBody').classList.toggle('open', basisOpen);
+  calc();
+}
+
+function industryChange() {
+  const ind = document.getElementById('industry').value;
+  const sstbInds = ['medical','legal','accounting','consulting','financial','arts'];
+  const capInds  = ['farming','construction'];
+
+  if (sstbInds.includes(ind)) {
+    setSST('yes', document.querySelector('#sstbGrp .tbtn:nth-child(2)'));
+    document.querySelector('#sstbGrp .tbtn:first-child').classList.remove('on');
+  } else {
+    setSST('no', document.querySelector('#sstbGrp .tbtn:first-child'));
+    document.querySelector('#sstbGrp .tbtn:nth-child(2)').classList.remove('on');
+  }
+
+  document.getElementById('capitalBox').style.display = capInds.includes(ind) ? 'block' : 'none';
+
+  if (capInds.includes(ind) && !basisOpen) toggleBasis();
+  calc();
+}
+
+// ══════════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════════
+function $c(n) {
+  if (isNaN(n) || n === null) return '—';
+  const abs = Math.abs(n);
+  const str = '$' + abs.toLocaleString('en-US', { maximumFractionDigits: 0 });
+  return n < 0 ? '-' + str : str;
+}
+function pct(n) { return (n * 100).toFixed(1) + '%'; }
+
+function incomeTax(ti, fs, p) {
+  if (ti <= 0) return 0;
+  let tax = 0;
+  for (const [lo, hi, r] of p.brackets[fs]) {
+    if (ti <= lo) break;
+    tax += (Math.min(ti, hi) - lo) * r;
+  }
+  return tax;
+}
+
+function seTax(np, p) {
+  const seNet = np * 0.9235;
+  return Math.min(seNet, p.ssBase) * 0.124 + seNet * 0.029;
+}
+
+function qbiDed(qbi, w2, ubia, ti, fs, p, isSSTB) {
+  if (qbi <= 0) return 0;
+
+  // §199A(a): lesser of 20% of QBI or 20% of taxable income before QBID
+  const raw = Math.min(qbi * 0.20, Math.max(0, ti) * 0.20);
+
+  const lo = p.qbiLow[fs], hi = p.qbiHigh[fs];
+
+  // Below threshold: full deduction, no W-2/property test
+  if (ti <= lo) return raw;
+
+  // W-2 wage limitation: greater of 50% of W-2 wages OR 25% of W-2 wages + 2.5% of UBIA
+  // §199A(b)(2)(B)
+  const w2limit = Math.max(w2 * 0.50, w2 * 0.25 + ubia * 0.025);
+
+  // Above upper threshold
+  if (ti >= hi) {
+    if (isSSTB) return 0;
+    return Math.min(raw, w2limit);
+  }
+
+  // Phase-out range
+  const ratio = (ti - lo) / (hi - lo);
+  if (isSSTB) {
+    // Reduce both QBI and W-2 by applicable percentage before computing limit
+    // §1.199A-1(d): applicable% applied to QBI, W-2, and UBIA for SSTB
+    return Math.min(raw, w2limit) * (1 - ratio);
+  }
+
+  // Non-SSTB: W-2 limit phases in — only the shortfall relative to W-2 limit is reduced
+  const excess = Math.max(0, raw - w2limit);
+  return raw - excess * ratio;
+}
+
+// ══════════════════════════════════════════════════════════
+//  MAIN CALC
+// ══════════════════════════════════════════════════════════
+function calc() {
+  const yr   = parseInt(document.getElementById('taxYear').value);
+  const p    = PARAMS[yr];
+  const fs   = filing;
+
+  const np      = +document.getElementById('netProfit').value    || 0;
+  const other   = +document.getElementById('otherIncome').value  || 0;
+  const stRate  = (+document.getElementById('stateRate').value   || 0) / 100;
+  const acctFee = +document.getElementById('accountingFees').value|| 0;
+  const prFee   = +document.getElementById('payrollFees').value  || 0;
+  const stFee   = +document.getElementById('stateFees').value    || 0;
+  const othAdm  = +document.getElementById('otherAdmin').value   || 0;
+  const salary     = +document.getElementById('ownerSalary').value  || 0;
+  const employeeW2 = +document.getElementById('employeeW2').value   || 0;
+  const sutaR      = (+document.getElementById('sutaRate').value    || 0) / 100;
+  const sutaB      = +document.getElementById('sutaBase').value     || 14000;
+  const ubia       = +document.getElementById('ubia').value         || 0;
+  const totalW2    = salary + employeeW2; // all W-2 wages for §199A test
+
+  const overhead = acctFee + prFee + stFee + othAdm;
+  document.getElementById('overheadTotal').textContent = $c(overhead);
+
+  // ── Salary health meter ──
+  const sp = np > 0 ? salary / np : 0;
+  const meterEl = document.getElementById('salaryMeter');
+  const hintEl  = document.getElementById('salaryHint');
+  const meterPct = Math.min(sp * 100, 100);
+  meterEl.style.width = meterPct + '%';
+  if (sp < 0.30 && np > 50000) {
+    meterEl.className = 'meter-fill bad';
+    hintEl.innerHTML = '<span style="color:var(--red)">Below 30% — high IRS audit risk. Increase salary.</span>';
+  } else if (sp < 0.40) {
+    meterEl.className = 'meter-fill warn';
+    hintEl.innerHTML = '<span style="color:var(--orange)">Caution: 30–40% range. Document your methodology carefully.</span>';
+  } else if (sp > 0.85 && np > 0) {
+    meterEl.className = 'meter-fill warn';
+    hintEl.innerHTML = '<span style="color:var(--orange)">Salary is very high — minimal FICA savings from S corp structure.</span>';
+  } else {
+    meterEl.className = 'meter-fill ok';
+    hintEl.textContent = (meterPct).toFixed(0) + '% of net profit — within reasonable range.';
+  }
+
+  // ── Employer payroll taxes ──
+  const empSS    = Math.min(salary, p.ssBase) * 0.062;
+  const empMed   = salary * 0.0145;
+  const empFICA  = empSS + empMed;
+  const futa     = Math.min(salary, 7000) * 0.006;
+  const suta     = Math.min(salary, sutaB) * sutaR;
+  const empTotal = empFICA + futa + suta;
+
+  document.getElementById('mEmpSS').textContent  = $c(empSS);
+  document.getElementById('mEmpMed').textContent  = $c(empMed);
+  document.getElementById('mFUTA').textContent    = $c(futa);
+  document.getElementById('mSUTA').textContent    = $c(suta);
+  document.getElementById('mEmpTotal').textContent= $c(empTotal);
+
+  const totalScorpCosts = overhead + empTotal;
+
+  // ── Distribution ──
+  const scDist = Math.max(0, np - salary - totalScorpCosts);
+
+  // ── Basis: compute HERE so it folds into sc_totalCost and netSavings ──
+  // Must happen after scDist is known, before totals are computed.
+  let basisExtra = 0;
+  let _basisBegin = 0, _basisKI = 0, _basisAdj = 0;
+  let _basisExcess = 0, _basisRemain = 0, _basisUseDist = scDist;
+
+  if (basisOpen) {
+    const stockB   = +document.getElementById('stockBasis').value  || 0;
+    const debtB    = +document.getElementById('debtBasis').value   || 0;
+    const planDst  = +document.getElementById('plannedDist').value || 0;
+    _basisUseDist  = planDst > 0 ? planDst : scDist;
+    _basisBegin    = stockB + debtB;
+    _basisKI       = scDist;                           // §1367: income increases basis FIRST
+    _basisAdj      = _basisBegin + _basisKI;           // adjusted basis before distributions
+    _basisExcess   = Math.max(0, _basisUseDist - _basisAdj);
+    _basisRemain   = Math.max(0, _basisAdj - _basisUseDist);
+    if (_basisExcess > 0) {
+      basisExtra = _basisExcess * (ltcgRate / 100) + _basisExcess * stRate;
+    }
+  }
+
+  // ════════════════
+  //  SOLE PROP
+  // ════════════════
+  const sp_se  = seTax(np, p);
+  const sp_seDed = sp_se / 2;
+  const sp_qbi   = np - sp_seDed;  // QBI ≈ net profit (simplified)
+  const sp_agi   = np - sp_seDed + other;
+  const sp_tiApx = Math.max(0, sp_agi - p.stdDed[fs]);
+  const sp_qbiD  = qbiDed(sp_qbi, 0, 0, sp_tiApx, fs, p, isSSTB);
+  const sp_ti    = Math.max(0, sp_agi - p.stdDed[fs] - sp_qbiD);
+  const sp_fedT  = incomeTax(sp_ti, fs, p);
+  const sp_addlM = Math.max(0, np * 0.9235 - p.addlMedThresh[fs]) * 0.009;
+  const sp_stT   = sp_ti * stRate;
+  const sp_totalTax = sp_fedT + sp_se + sp_addlM + sp_stT;
+
+  // ════════════════
+  //  S CORP
+  // ════════════════
+  const ownerEmpSS  = Math.min(salary, p.ssBase) * 0.062;
+  const ownerEmpMed = salary * 0.0145;
+  const ownerFICA   = ownerEmpSS + ownerEmpMed;
+  const sc_addlM    = Math.max(0, salary - p.addlMedThresh[fs]) * 0.009;
+  const sc_agi      = salary + scDist + other;
+  const sc_tiApx    = Math.max(0, sc_agi - p.stdDed[fs]);
+  const sc_qbiD     = qbiDed(scDist, totalW2, ubia, sc_tiApx, fs, p, isSSTB);
+  const sc_ti       = Math.max(0, sc_agi - p.stdDed[fs] - sc_qbiD);
+  const sc_fedT     = incomeTax(sc_ti, fs, p);
+  const sc_stT      = sc_ti * stRate;
+  const sc_ownerTax = sc_fedT + ownerFICA + sc_addlM + sc_stT;
+  const sc_totalCost= sc_ownerTax + totalScorpCosts + basisExtra; // basisExtra=0 unless basis panel open & excess exists
+
+  // ── Effective rates ──
+  const sp_eff = np > 0 ? sp_totalTax / np : 0;
+  const sc_eff = np > 0 ? sc_ownerTax / np : 0;
+  const netSavings = sp_totalTax - sc_totalCost;
+  const ficaSave   = sp_se - (ownerFICA + empFICA);
+
+  // ── Break-even ──
+  // At break-even: FICA savings ≈ overhead + extra FICA costs
+  // Approximate: (np × 0.9235 × 0.153) - (salary × 0.153) ≈ overhead + empFICA
+  // Rough linear: overhead / (0.9235 × 0.153 - salary_ratio × 0.153)
+  let breakEven = null;
+  if (np > 0) {
+    // Numerical search
+    for (let testIncome = 30000; testIncome <= 500000; testIncome += 500) {
+      const tSalary = testIncome * (salary / np || 0.4);
+      const tEmpSS  = Math.min(tSalary, p.ssBase) * 0.062;
+      const tEmpMed = tSalary * 0.0145;
+      const tFICA   = (tEmpSS + tEmpMed) * 2 + Math.min(tSalary, 7000) * 0.006 + Math.min(tSalary, sutaB) * sutaR;
+      const tSE     = seTax(testIncome, p);
+      if (tSE - tFICA > overhead) {
+        breakEven = testIncome;
+        break;
+      }
+    }
+  }
+
+  // ── Basis panel display (values already computed above) ──
+  const basisEl = document.getElementById('basisResult');
+  if (basisOpen) {
+    basisEl.style.display = 'block';
+    const basisStack = `
+      <table style="width:100%;font-size:.8rem;margin:.6rem 0;border-collapse:collapse;">
+        <tr><td style="color:var(--muted);padding:.25rem 0;">Beginning stock + debt basis</td><td style="text-align:right;">${$c(_basisBegin)}</td></tr>
+        <tr><td style="color:var(--muted);padding:.25rem 0;">+ Current-year K-1 income (§1367: added before distributions)</td><td style="text-align:right;color:var(--green);">+${$c(_basisKI)}</td></tr>
+        <tr style="border-top:1px solid var(--border);font-weight:700;"><td style="padding:.3rem 0;">= Adjusted basis available before distributions</td><td style="text-align:right;">${$c(_basisAdj)}</td></tr>
+        <tr><td style="color:var(--muted);padding:.25rem 0;">− Distributions</td><td style="text-align:right;color:var(--red);">−${$c(_basisUseDist)}</td></tr>
+        <tr style="border-top:1px solid var(--border);font-weight:700;"><td style="padding:.3rem 0;">= ${_basisExcess > 0 ? 'Excess above basis (taxed as capital gain)' : 'Remaining basis after distributions'}</td><td style="text-align:right;${_basisExcess > 0 ? 'color:var(--red);' : 'color:var(--green);'}">${_basisExcess > 0 ? $c(_basisExcess) : $c(_basisRemain)}</td></tr>
+      </table>`;
+    if (_basisExcess > 0) {
+      basisEl.className = 'notice danger';
+      basisEl.innerHTML = `<strong>Distributions Exceed Adjusted Basis by ${$c(_basisExcess)}</strong>
+        That excess is taxed as long-term capital gain.
+        Estimated capital gain tax: <strong>${$c(basisExtra)}</strong> (${ltcgRate}% federal LTCG + ${(stRate*100).toFixed(1)}% state).
+        <strong>This amount is already included in the S Corp total cost below.</strong>
+        ${basisStack}
+        <em>S corp entity-level bank debt does NOT increase your stock basis — unlike a partnership. Only personal loans you make directly to the S corp create debt basis.</em>`;
+    } else {
+      basisEl.className = 'notice success';
+      basisEl.innerHTML = `<strong>Distributions Within Adjusted Basis — No Capital Gain</strong>
+        ${basisStack}
+        <em style="font-size:.77rem;">S corp entity-level bank loans (equipment notes, operating lines) do NOT increase your stock basis. Only personal loans you make directly to the S corp create debt basis. Track basis annually with your CPA.</em>`;
+    }
+  } else {
+    basisEl.style.display = 'none';
+  }
+
+  // ════════════════
+  //  UPDATE UI
+  // ════════════════
+
+  // Banner
+  const banner = document.getElementById('savingsBanner');
+  banner.className = 'savings-banner ' + (netSavings >= 0 ? 'pos' : 'neg');
+  document.getElementById('savingsNum').style.color = netSavings >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('savingsNum').textContent = $c(Math.abs(netSavings));
+  document.getElementById('savingsLbl').textContent = netSavings >= 0
+    ? 'Estimated annual net savings with S Corp (after all overhead costs)'
+    : 'Estimated annual additional cost — S corp not advantageous at this income level';
+
+  // KPIs
+  document.getElementById('kpiSPRate').textContent  = pct(sp_eff);
+  document.getElementById('kpiSCRate').textContent  = pct(sc_eff);
+  document.getElementById('kpiFICASave').textContent= $c(Math.max(0, ficaSave));
+  document.getElementById('kpiOverhead').textContent= $c(overhead);
+  document.getElementById('kpiBreakeven').textContent = breakEven ? '~' + $c(breakEven) : 'N/A';
+
+  // Table
+  const tbody = document.getElementById('tblBody');
+  let html = '';
+
+  function secHdr(lbl) {
+    return `<tr class="sec-hdr"><td colspan="4">${lbl}</td></tr>`;
+  }
+
+  function row(lbl, sp, sc, note) {
+    const d = sc - sp;
+    const dClass = d < -0.5 ? 'diff-pos' : d > 0.5 ? 'diff-neg' : 'diff-0';
+    const dStr = Math.abs(d) < 1 ? '—' : (d < 0 ? $c(d) : '+' + $c(d).replace('$','') );
+    return `<tr>
+      <td>${lbl}${note ? `<br><span class="section-label">${note}</span>` : ''}</td>
+      <td>${$c(sp)}</td>
+      <td>${$c(sc)}</td>
+      <td class="${dClass}">${dStr}</td>
+    </tr>`;
+  }
+
+  html += secHdr('INCOME FLOW');
+  html += row('Net Business Profit', np, np, 'Starting point for both scenarios');
+  html += row('Owner W-2 Salary', 0, salary, 'S corp: subject to employee + employer FICA');
+  html += row('S Corp Distribution (Pass-Through)', 0, scDist, 'Not subject to FICA/SE tax');
+  html += row('AGI (Adjusted Gross Income)', sp_agi, sc_agi);
+
+  html += secHdr('SELF-EMPLOYMENT / FICA TAXES');
+  html += row('Self-Employment Tax (Sole Prop)', sp_se, 0, '15.3% on 92.35% of net profit (up to SS base), 2.9% above');
+  html += row('Owner Employee FICA (W-2)', 0, ownerFICA, '7.65% on salary — employee share');
+  html += row('Employer FICA (S Corp Cost)', 0, empFICA, '7.65% on salary — employer share, deductible to business');
+  html += row('FUTA', 0, futa, '0.6% effective rate on first $7,000');
+  html += row('SUTA', 0, suta, 'State unemployment — employer');
+  html += row('Additional Medicare Tax (0.9%)', sp_addlM, sc_addlM, 'High earner surcharge above $200K/$250K threshold');
+
+  html += secHdr('DEDUCTIONS');
+  html += row('½ Self-Employment Tax Deduction', -sp_seDed, 0, 'Sole prop: reduces AGI');
+  html += row('Standard Deduction', -p.stdDed[fs], -p.stdDed[fs]);
+  // Determine which limit is the binding constraint for the note
+  const sp_qbiCap20 = sp_tiApx * 0.20;
+  const sc_qbiCap20 = sc_tiApx * 0.20;
+  const sc_w2limit  = Math.max(totalW2 * 0.50, totalW2 * 0.25 + ubia * 0.025);
+  let qbiNote;
+  if (isSSTB && sc_tiApx >= p.qbiHigh[fs]) {
+    qbiNote = 'SSTB above upper threshold — deduction fully eliminated';
+  } else if (isSSTB && sc_tiApx >= p.qbiLow[fs]) {
+    qbiNote = 'SSTB in phase-out — deduction reduced by applicable % (wages + UBIA also reduced)';
+  } else if (sc_tiApx >= p.qbiHigh[fs]) {
+    qbiNote = `Above threshold: lesser of 20% of QBI or 20% of TI, then limited to W-2 test (max of 50% of ${$c(totalW2)} W-2 wages or 25% W-2 + 2.5% UBIA)`;
+  } else if (sc_tiApx > p.qbiLow[fs]) {
+    qbiNote = `Phase-out range: W-2 wage limit (${$c(sc_w2limit)}) phases in — S corp ${sc_w2limit >= scDist * 0.20 ? 'fully protected by wages' : 'partially limited'}`;
+  } else if (sp_qbiD < sp_qbi * 0.20 || sc_qbiD < scDist * 0.20) {
+    qbiNote = 'Deduction limited to 20% of taxable income before QBID (binding cap)';
+  } else {
+    qbiNote = 'Below threshold: lesser of 20% of QBI or 20% of taxable income before QBID — no W-2 test';
+  }
+  html += row('§199A QBI Deduction', -sp_qbiD, -sc_qbiD, qbiNote);
+
+  html += secHdr('TAXABLE INCOME');
+  html += row('Federal Taxable Income', sp_ti, sc_ti);
+
+  html += secHdr('INCOME TAXES');
+  html += row('Federal Income Tax', sp_fedT, sc_fedT);
+  html += row('State Income Tax (est.)', sp_stT, sc_stT, `${(stRate*100).toFixed(1)}% approximation`);
+
+  html += secHdr('S CORP FIXED OVERHEAD');
+  html += row('Additional Accounting / CPA Fees', 0, acctFee);
+  html += row('Payroll Processing Service', 0, prFee);
+  html += row('State Annual / Franchise Fees', 0, stFee);
+  html += row('Other Admin Costs', 0, othAdm);
+
+  if (basisOpen && basisExtra > 0) {
+    html += secHdr('BASIS IMPACT');
+    html += row('Capital Gain Tax on Excess Distributions', 0, basisExtra,
+      `${$c(_basisExcess)} excess above adjusted basis, taxed at ${ltcgRate}% LTCG + ${(stRate*100).toFixed(1)}% state`);
+  }
+
+  // ── Totals ──
+  html += `<tr class="total-row">
+    <td>TOTAL TAX BURDEN (taxes only)</td>
+    <td>${$c(sp_totalTax)}</td>
+    <td>${$c(sc_ownerTax)}</td>
+    <td class="${sp_totalTax > sc_ownerTax ? 'diff-pos' : 'diff-neg'}">${$c(sc_ownerTax - sp_totalTax)}</td>
+  </tr>`;
+
+  const netCls = netSavings >= 0 ? 'pos' : 'neg';
+  html += `<tr class="net-row ${netCls}">
+    <td>NET TOTAL COST (taxes + overhead)</td>
+    <td>${$c(sp_totalTax)}</td>
+    <td>${$c(sc_totalCost)}</td>
+    <td>${netSavings >= 0 ? 'SAVE ' + $c(netSavings) : 'COSTS ' + $c(Math.abs(netSavings)) + ' MORE'}</td>
+  </tr>`;
+
+  tbody.innerHTML = html;
+
+  // ── Warnings ──
+  let warns = '';
+
+  // SSTB high income
+  if (isSSTB) {
+    if (sc_ti >= p.qbiHigh[fs]) {
+      warns += `<div class="notice danger"><strong>SSTB: QBI Deduction Completely Eliminated</strong>
+        Your taxable income (${$c(sc_ti)}) exceeds the §199A upper threshold of ${$c(p.qbiHigh[fs])} for ${fs === 'mfj' ? 'MFJ' : fs === 'hoh' ? 'HOH' : 'single'} filers.
+        As an SSTB, you receive <strong>zero QBI deduction</strong>. This means you lose a key benefit of pass-through entity taxation.
+        Consider whether the S corp FICA savings alone justify the overhead and complexity.</div>`;
+    } else if (sc_ti >= p.qbiLow[fs]) {
+      warns += `<div class="notice warn"><strong>SSTB: QBI Deduction Partially Phased Out</strong>
+        Your income falls in the SSTB phase-out range (${$c(p.qbiLow[fs])} – ${$c(p.qbiHigh[fs])}).
+        Your §199A deduction is proportionally reduced. Growing income may eliminate it entirely.</div>`;
+    }
+  }
+
+  // Non-SSTB high income W-2 advantage
+  if (!isSSTB && sc_tiApx > p.qbiLow[fs]) {
+    warns += `<div class="notice info"><strong>W-2 Wage Limitation — S Corp Advantage</strong>
+      Above the §199A threshold, the QBI deduction is limited to 50% of W-2 wages paid.
+      As a sole prop you have $0 W-2 wages — your deduction could be $0.
+      Your S corp salary of ${$c(salary)} generates W-2 wages, supporting a QBI deduction of up to ${$c(salary * 0.50)}.
+      This is a significant advantage of S corp structure at higher income levels.</div>`;
+  }
+
+  // S corp not viable
+  if (salary + totalScorpCosts > np) {
+    warns += `<div class="notice danger"><strong>S Corp Not Viable at Current Settings</strong>
+      Salary (${$c(salary)}) + overhead (${$c(totalScorpCosts)}) = ${$c(salary + totalScorpCosts)} exceeds net profit of ${$c(np)}.
+      Reduce salary or increase income for the S corp structure to work.</div>`;
+  }
+
+  // Low income warning
+  if (np < 50000 && np > 0) {
+    warns += `<div class="notice warn"><strong>S Corp May Not Be Worthwhile at This Income Level</strong>
+      S corps are generally beneficial starting around $50,000–$80,000 net profit. Below that, fixed overhead costs typically exceed FICA savings. A sole proprietorship or single-member LLC may be more cost-effective.</div>`;
+  }
+
+  // Reasonable salary note if low
+  if (salary > 0 && salary < np * 0.30 && np > 50000) {
+    warns += `<div class="notice danger"><strong>Salary Below 30% of Net Profit — Audit Risk</strong>
+      The IRS and courts have consistently scrutinized S corp owners paying themselves below 30–40% of net profit.
+      Recharacterization of distributions as wages results in back FICA taxes + penalties + interest.
+      Courts look at: comparable salaries, services performed, time spent, and business profitability.</div>`;
+  }
+
+  // Break-even note
+  warns += `<div class="notice info"><strong>Break-Even &amp; Decision Summary</strong>
+    ${np > 0 ? `At ${$c(np)} net profit, the S corp ${netSavings >= 0 ? `<strong>saves you ${$c(netSavings)}/year</strong> after all overhead.` : `<strong>costs ${$c(Math.abs(netSavings))} more/year</strong> — overhead exceeds FICA savings.`}` : ''}
+    ${breakEven ? `Based on your cost inputs, S corps typically break even around <strong>${$c(breakEven)} net profit</strong> for your salary-to-income ratio and state.` : ''}
+    The S corp election requires ongoing discipline: timely payroll deposits, quarterly tax payments, separate books, annual corporate minutes, and a reasonable salary every year.
+    </div>`;
+
+  document.getElementById('warningsArea').innerHTML = warns;
+}
+
+// ── Initialize ──
+calc();
+</script>

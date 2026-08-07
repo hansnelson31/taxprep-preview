@@ -1,0 +1,25 @@
+<script>
+  (function () {
+    document.querySelectorAll('.accordion-trigger').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.accordion-item');
+        var panel = item.querySelector('.accordion-panel');
+        var isOpen = item.classList.contains('open');
+        if (isOpen) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          requestAnimationFrame(function () { panel.style.maxHeight = '0px'; });
+          item.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          panel.addEventListener('transitionend', function handler() {
+            if (item.classList.contains('open')) panel.style.maxHeight = 'none';
+            panel.removeEventListener('transitionend', handler);
+          });
+        }
+      });
+    });
+  })();
+</script>
