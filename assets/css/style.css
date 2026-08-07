@@ -383,6 +383,7 @@ section.tight { padding: var(--sp-9) 0; }
 
 /* ---- Lists ---- */
 .check-list li { position: relative; padding-left: 26px; margin-bottom: 10px; }
+.check-list li:last-child { margin-bottom: 0; }
 .check-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; background: var(--green-700); border-radius: 50%; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 10px; }
 .tag-list li { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--r-pill); padding: 8px 17px; font-size: 0.9rem; font-weight: 500; }
@@ -407,6 +408,7 @@ section.tight { padding: var(--sp-9) 0; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
 .contact-info-list li { margin-bottom: 16px; font-size: 1.02rem; }
+.contact-info-list li:last-child { margin-bottom: 0; }
 .contact-info-list .label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--green-700); font-weight: 700; margin-bottom: 3px; }
 
 form.contact-form label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--text-strong); }
@@ -430,6 +432,7 @@ form.contact-form input:focus, form.contact-form textarea:focus { outline: none;
 .footer-grid a { text-decoration: none; color: var(--text-on-dark-muted); }
 .footer-grid a:hover { color: #fff; }
 .footer-links li { margin-bottom: 11px; }
+.footer-links li:last-child { margin-bottom: 0; }
 .footer-social { display: flex; gap: 14px; margin-top: 8px; }
 .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; transition: background var(--dur-base) var(--ease-standard); }
 .footer-social a:hover { background: var(--green-700); }
@@ -450,6 +453,7 @@ form.contact-form input:focus, form.contact-form textarea:focus { outline: none;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  min-width: 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -462,6 +466,7 @@ form.contact-form input:focus, form.contact-form textarea:focus { outline: none;
 }
 .accordion-trigger:hover { color: var(--green-700); }
 .accordion-trigger:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--r-sm); }
+.accordion-trigger > span:first-child { min-width: 0; }
 .accordion-chevron {
   flex-shrink: 0;
   width: 22px;
@@ -491,3 +496,4 @@ form.contact-form input:focus, form.contact-form textarea:focus { outline: none;
 .book-card img { width: 90px; border-radius: var(--r-xs); box-shadow: var(--shadow-md); flex-shrink: 0; }
 .book-card h3 { font-size: 1.05rem; margin-bottom: 0.2em; font-family: var(--font-sans); font-weight: 600; }
 .book-card p { font-size: 0.92rem; margin-bottom: 0.3em; opacity: 0.85; }
+.book-card p:last-child { margin-bottom: 0; }
