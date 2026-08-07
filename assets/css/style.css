@@ -385,6 +385,12 @@ section.tight { padding: var(--sp-9) 0; }
 .check-list li { position: relative; padding-left: 26px; margin-bottom: 10px; }
 .check-list li:last-child { margin-bottom: 0; }
 .check-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; background: var(--green-700); border-radius: 50%; }
+/* One continuous list that lays out in two columns on wider screens,
+   instead of two separate <ul>s in a grid — avoids a mismatched gap
+   between "columns" once they stack (grid gap != in-list item gap). */
+.check-list-columns { column-count: 1; column-gap: 40px; }
+.check-list-columns li { break-inside: avoid-column; }
+@media (min-width: 700px) { .check-list-columns { column-count: 2; } }
 .tag-list { display: flex; flex-wrap: wrap; gap: 10px; }
 .tag-list li { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--r-pill); padding: 8px 17px; font-size: 0.9rem; font-weight: 500; }
 
