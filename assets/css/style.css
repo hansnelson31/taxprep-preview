@@ -219,18 +219,31 @@ section.tight { padding: var(--sp-9) 0; }
 }
 
 .file-stack-card {
-  position: sticky;
-  top: 8vh;
-  height: 76vh;
-  margin-left: 20px;
   border-radius: var(--r-xl);
   box-shadow: var(--shadow-xl);
-  padding: clamp(28px, 5vw, 64px) clamp(28px, 6vw, 72px);
+  padding: clamp(24px, 4vw, 56px) clamp(24px, 5vw, 64px);
+  margin: 0 40px 0 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
   border-bottom: 8px solid var(--burnt-600);
+}
+
+/* Card 1 is free — normal in-flow element, no pinning, scrolls away
+   immediately at the same rate as the page. */
+.file-stack-card.is-free {
+  position: relative;
+}
+
+/* Cards 2 & 3 are pinned — they dock below the nav, with real
+   breathing room above and to the right, and hold there until their
+   trigger's height is used up. */
+.file-stack-card.is-pinned {
+  position: sticky;
+  top: 130px;
+  height: calc(100vh - 178px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .file-stack-card.tone-denim { background: var(--denim-700); }
@@ -241,21 +254,34 @@ section.tight { padding: var(--sp-9) 0; }
 
 .file-stack-card .eyebrow { margin-bottom: 0.6em; }
 .file-stack-card h2 { max-width: 640px; }
-.file-stack-card .fsc-lead { max-width: 600px; font-size: 1.1rem; color: var(--text-on-dark-muted); margin-bottom: 0; }
+.file-stack-card .fsc-lead { max-width: 620px; font-size: 1.1rem; color: var(--text-on-dark-muted); margin-bottom: 0; }
 
 .file-stack-list { margin-top: 1.6em; display: grid; gap: 16px; max-width: 600px; }
 .file-stack-list a { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 1.15rem; color: #fff; text-decoration: none; }
 .file-stack-list a:hover { text-decoration: underline; }
 .file-stack-list .fsl-arrow { color: var(--burnt-500); flex-shrink: 0; }
 
-.fsc-quote { margin: 0 0 1.4em; padding: 0; border: none; font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.5; color: var(--text-strong); }
-.fsc-quote:last-child { margin-bottom: 0; }
-.fsc-quote cite { display: block; margin-top: 10px; font-family: var(--font-sans); font-style: normal; font-weight: 600; font-size: 0.9rem; color: var(--green-700); }
+/* Full feature/photo content restored inside cards 1 & 2 */
+.fsc-feature-list { margin-top: 1.4em; display: grid; gap: 20px; max-width: 640px; }
+.fsc-feature { display: flex; align-items: flex-start; gap: 16px; }
+.fsc-feature-icon { flex-shrink: 0; width: 40px; height: 40px; color: var(--burnt-500); }
+.fsc-feature-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.fsc-feature h3 { font-size: 1.1rem; margin-bottom: 0.3em; color: #fff; }
+.fsc-feature p { margin: 0; color: var(--text-on-dark-muted); font-size: 0.98rem; }
+.fsc-feature-thumb { width: 56px; height: 56px; border-radius: var(--r-md); object-fit: cover; flex-shrink: 0; }
+.fsc-feature-link { text-decoration: none; color: inherit; }
+.fsc-feature-link:hover h3 { text-decoration: underline; }
+
+/* Full testimonials restored inside card 3 */
+.fsc-quote-list { margin-top: 0.4em; display: grid; gap: 18px; }
+.fsc-quote { margin: 0; padding: 0; border: none; font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.5; color: var(--text-strong); }
+.fsc-quote cite { display: block; margin-top: 8px; font-family: var(--font-sans); font-style: normal; font-weight: 600; font-size: 0.85rem; color: var(--green-700); }
 
 @media (max-width: 700px) {
   .file-stack-tabs-col { width: 40px; }
   .file-stack-tab { font-size: 11px; padding: 12px 6px; }
-  .file-stack-card { height: 82vh; margin-left: 10px; }
+  .file-stack-card { margin: 0 16px 0 10px; }
+  .file-stack-card.is-pinned { top: 90px; height: calc(100vh - 130px); }
 }
 
 /* ---- Buttons ---- */
