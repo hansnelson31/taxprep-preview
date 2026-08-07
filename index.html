@@ -1,211 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Up Start Template</title>
-    <meta property="og:title" content="Up Start Template" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta property="twitter:card" content="summary_large_image" />
+---
+layout: base
+title: HGN Tax Prep | Tax Preparation, Accounting & Business Advisory
+description: "Tax preparation that's right on the money. HGN Tax Prep serves individuals and businesses in Severance, Colorado and beyond with accounting, tax planning, and advisory services."
+---
 
-    <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
-    </style>
-    <style data-tag="default-style-sheet">
-      html {
-        font-family: Titillium Web;
-        font-size: 16px;
-      }
+<section class="hero" style="background-image: url('{{ "/assets/img/photos/flatirons-fog.jpg" | relative_url }}');">
+  <div class="container-xl">
+    <span class="eyebrow tone-onDark">Tax Preparation &amp; Planning</span>
+    <h1>Tax prep that's right on the money.</h1>
+    <p class="lead">Your trusted advisor for crucial tax and business questions. With the general rule being that "all income, from whatever source derived, is taxable," we work to find every exception to that rule for individuals, businesses, and trusts in the preparation and review of your tax returns &mdash; and we make sure it's done right.</p>
+    <div class="btn-row">
+      <a href="https://calendly.com/hgntax/tax-consultation" target="_blank" rel="noopener" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hgntax/tax-consultation'});return false;" class="btn btn-accent btn-lg">Get a Free Consultation</a>
+      <a href="{{ '/services/' | relative_url }}" class="btn btn-outline-onDark btn-lg">See Our Services</a>
+    </div>
+  </div>
+</section>
 
-      body {
-        font-weight: 400;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.15;
-        color: var(--dl-color-scheme-green100);
-        background-color: var(--dl-color-scheme-yellow20);
-
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&amp;display=swap"
-      data-tag="font"
-    />
-    <!--This is the head section-->
-    <!-- <script type="text/javascript"> ... </script> -->
-  </head>
-  <body>
-    <link rel="stylesheet" href="./style.css" />
-    <div>
-      <link href="./index.css" rel="stylesheet" />
-
-      <div class="home-container">
-        <div class="navbar-container">
-          <div class="max-width home-max-width">
-            <div class="home-logo">
-              <img alt="image" src="public/group%202.svg" class="home-image" />
-              <span>HGN TAX PREP</span>
-            </div>
-          </div>
-        </div>
-        <div class="hero-container section-container">
-          <div class="home-max-width1 max-width">
-            <div class="home-content">
-              <span class="home-subtitle">Tax Preparation and Planning</span>
-              <h1 class="home-title">
-                <span>Tax prep that's&nbsp;</span>
-                <br class="home-text02" />
-                <span class="home-text03">right on the money</span>
-                <br class="home-text04" />
-              </h1>
-              <span class="home-description">
-                With multiple years of experience in preparing and reviewing tax
-                returns for individuals, businesses, and trusts, Hans can
-                provide the assistance you need to make sure your tax returns
-                are accurate.&nbsp;
-              </span>
-              <div class="home-container1">
-                <a
-                  href="https://calendly.com/hgntax"
-                  name="contact"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="home-link button button-gradient"
-                >
-                  Get started
-                </a>
-              </div>
-            </div>
-            <div class="home-image1">
-              <img
-                alt="image"
-                src="public/union-400w.png"
-                class="home-graphic-top"
-              />
-              <img
-                alt="image"
-                src="public/group%2018-1200w.png"
-                class="home-image2"
-              />
-              <img
-                alt="image"
-                src="https://images.unsplash.com/photo-1554224154-22dec7ec8818?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3w5MTMyMXwwfDF8c2VhcmNofDMzfHxpcnN8ZW58MHx8fHwxNjk0MjA2ODAzfDA&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=600"
-                class="home-image3"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="section-container">
-          <div class="home-max-width2 max-width">
-            <h1 class="home-text05">
-              <span>No matter what you do, HGN Tax Prep</span>
-              <br />
-              <span>can advise you on your taxes</span>
-            </h1>
-            <div class="home-cards-container">
-              <div class="card-card card-root-class-name">
-                <div class="card-info">
-                  <span class="card-text"><span>Business</span></span>
-                  <span class="card-text1">
-                    <span>From sole proprietors to complex partnerships</span>
-                  </span>
-                </div>
-              </div>
-              <div class="card-card card-root-class-name2">
-                <div class="card-info">
-                  <span class="card-text"><span>Personal</span></span>
-                  <span class="card-text1">
-                    <span>
-                      Simple strategies for reducing your tax exposure
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <div class="card-card card-root-class-name1">
-                <div class="card-info">
-                  <span class="card-text"><span>Family</span></span>
-                  <span class="card-text1">
-                    <span>
-                      Navigating estate issues and pro-active planning
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <footer class="home-footer">
-          <div class="home-links-container">
-            <div class="home-container2">
-              <div id="footer1" class="home-container3 footer-column">
-                <span class="home-text09">Company</span>
-                <a href="about.html" class="home-navlink">About us</a>
-                <a
-                  href="mailto:hans@hgn.tax?subject=I Found Your Website and Have a few Tax Questions"
-                  class="home-link1"
-                >
-                  Contact
-                </a>
-              </div>
-            </div>
-          </div>
-        </footer>
+<section>
+  <div class="container-xl">
+    <div class="tab-divider">
+      <span class="tab-num">01</span>
+      <span class="tab-rule"></span>
+      <div class="tab-body">
+        <span class="eyebrow tone-seafoam">What We Do</span>
+        <h2>Beyond the numbers</h2>
+        <p>Understanding tax law takes deep knowledge of your industry, a willingness to pick up the phone, and the fortitude to follow through &mdash; not just software and a deadline.</p>
       </div>
     </div>
-    <script>
-      window.onload = () => {
-        const runAllScripts = () => {
-          initializeAllAccordions()
-        }
+    <div class="grid grid-3">
+      <div class="card feature-card">
+        <div class="feature-icon">{% include icons/calculator.html %}</div>
+        <h3>Accounting &amp; Bookkeeping</h3>
+        <p>We record and interpret the economics of your business &mdash; QuickBooks setup, training, and monthly bookkeeping that keeps your numbers clear and current, all year long.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">{% include icons/file-percent.html %}</div>
+        <h3>Tax Preparation &amp; Planning</h3>
+        <p>Tailored strategies to reduce your tax bill, prepared and carried out &mdash; for individuals, businesses, trusts, and estates, planned ahead of time instead of rushed in April.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon">{% include icons/compass.html %}</div>
+        <h3>Business Advisory Services</h3>
+        <p>Guidance that keeps your business on the right path &mdash; entity selection, cash management, and process improvements built around how your business actually operates.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const listenForUrlChanges = () => {
-          let url = location.href
-          document.body.addEventListener(
-            'click',
-            () => {
-              requestAnimationFrame(() => {
-                if (url !== location.href) {
-                  runAllScripts()
-                  url = location.href
-                }
-              })
-            },
-            true
-          )
-        }
+<section class="band-tan">
+  <div class="container-xl">
+    <div class="tab-divider">
+      <span class="tab-num">02</span>
+      <span class="tab-rule"></span>
+      <div class="tab-body">
+        <span class="eyebrow tone-seafoam">Industries of Expertise</span>
+        <h2>We know your business, not just your bracket</h2>
+        <p>Some tax situations need more than general knowledge. These are the industries we specialize in.</p>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <a href="{{ '/construction-real-estate/' | relative_url }}" class="card-photo is-interactive">
+        <img src="{{ '/assets/img/photos/land-clearing.jpg' | relative_url }}" alt="Construction and land development site">
+        <div class="card-photo-body">
+          <h3>Construction &amp; Real Estate</h3>
+          <p>Solid tax strategy for solid ground-up work &mdash; from job costing to entity structure.</p>
+        </div>
+      </a>
+      <a href="{{ '/high-net-worth/' | relative_url }}" class="card-photo is-interactive">
+        <img src="{{ '/assets/img/photos/lake-boardwalk-sunset.jpg' | relative_url }}" alt="Sunset over a Colorado lake">
+        <div class="card-photo-body">
+          <h3>High Net Worth</h3>
+          <p>A holistic plan to maximize tax efficiency across your whole portfolio, not just this year.</p>
+        </div>
+      </a>
+      <a href="{{ '/agriculture/' | relative_url }}" class="card-photo is-interactive">
+        <img src="{{ '/assets/img/photos/tractor-hay-baling.jpg' | relative_url }}" alt="Tractor baling hay on a Colorado farm">
+        <div class="card-photo-body">
+          <h3>Agriculture</h3>
+          <p>Coops, crop production, feedlots, and dairies &mdash; tax strategy built for how farms actually run.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
 
-        const initializeAllAccordions = () => {
-          const allAccordions = document.querySelectorAll('[data-role="Accordion"]');
+<section>
+  <div class="container-xl">
+    <div class="tab-divider">
+      <span class="tab-num">03</span>
+      <span class="tab-rule"></span>
+      <div class="tab-body">
+        <span class="eyebrow tone-seafoam">Reviews</span>
+        <h2>What clients say</h2>
+      </div>
+    </div>
+    {% include testimonials.html %}
+  </div>
+</section>
 
-          allAccordions.forEach((accordion) => {
-            const accordionHeader = accordion.querySelector('[data-type="accordion-header"]')
-            const accordionContent = accordion.querySelector('[data-type="accordion-content"]')
+<section class="band-green">
+  <div class="container-xl">
+    <div class="grid grid-2" style="align-items:center;">
+      <div>
+        <span class="eyebrow" style="color:#fff;">Hard Work &middot; Honest Words &middot; Best-In-Class Results</span>
+        <h2>We provide innovative tax solutions that are right on the money</h2>
+        <p>Guiding our clients toward a brighter, more confident future &mdash; that's the whole job. Hans Nelson, CPA, grew up on a Northern Colorado farm, and that upbringing still shapes how HGN works today: hard work, honest communication, and practical expertise.</p>
+        <a href="{{ '/about/' | relative_url }}" class="btn btn-primary">Meet Hans</a>
+      </div>
+      <div class="card tone-denim">
+        <h3>9am&ndash;6pm, Monday to Friday</h3>
+        <p style="color:var(--text-on-dark-muted);">Phone: <a href="tel:+19704606676" style="color:#fff;">(970) 460-6676</a><br>
+        Email: <a href="mailto:hans@hgn.tax" style="color:#fff;">hans@hgn.tax</a><br>
+        P.O. Box 161, Severance, Colorado 80546</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            accordionHeader.addEventListener('click', () => {
-              if (accordionContent.style.maxHeight) {
-                accordionContent.style.maxHeight = ''
-              } else {
-                accordionContent.style.maxHeight = `${accordionContent.scrollHeight}px`
-              }
-            })
-          })
-        }
-
-        listenForUrlChanges()
-        runAllScripts()
-      }
-    </script>
-  </body>
-</html>
+<section>
+  <div class="container">
+    <div class="cta-banner">
+      <h2>Right on the money.</h2>
+      <p>Give us a call, send an email, or schedule your free initial consultation below.</p>
+      <div class="btn-row" style="justify-content:center; margin-top:24px;">
+        <a href="https://calendly.com/hgntax/tax-consultation" target="_blank" rel="noopener" onclick="Calendly.initPopupWidget({url:'https://calendly.com/hgntax/tax-consultation'});return false;" class="btn btn-accent btn-lg">Schedule a Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
