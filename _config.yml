@@ -1,7 +1,7 @@
 title: HGN Tax Prep
 description: "Tax preparation, accounting, and business advisory services in Severance, Colorado. Right on the money."
-url: "https://www.hgn.tax"
-baseurl: ""
+url: "https://hansnelson31.github.io"
+baseurl: "/taxprep-preview"
 
 markdown: kramdown
 kramdown:
