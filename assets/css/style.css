@@ -156,6 +156,21 @@ p { margin: 0 0 1em; }
 section { padding: var(--section-y) 0; }
 section.tight { padding: var(--sp-9) 0; }
 
+/* ---- Scroll-stack panels (experiment) ----
+   Each panel pins at the top of the viewport and holds there while
+   the next one, being later in source order, scrolls up over it —
+   giving a "cards stacking" reveal effect. Panels after the last one
+   in the group behave normally (no wrapper needed to "turn it off"). */
+.scroll-stack-panel {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--surface-page);
+}
+.scroll-stack-panel.band-tan { background: var(--grain-200); }
+
 /* ---- Buttons ---- */
 .btn {
   display: inline-flex;
