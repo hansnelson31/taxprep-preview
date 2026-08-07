@@ -196,8 +196,27 @@ section.tight { padding: var(--sp-9) 0; }
 .file-stack-tab.tone-seafoam { background: var(--green-700); color: #fff; }
 .file-stack-tab.tone-cream { background: var(--surface-card); color: var(--denim-700); }
 
-.file-stack-slots { flex: 1; min-width: 0; }
-.file-stack-slot { position: relative; height: 150vh; }
+/* All three triggers occupy the SAME grid cell (overlapping), each
+   anchored to the top of that shared area but with a different own
+   height — so cards 2 and 3 are already docked in place, hidden
+   behind card 1, from the very first frame, instead of sitting
+   further down the document waiting to be scrolled into view. Card 1
+   (shortest trigger, highest z-index) releases and scrolls away
+   first; card 2 is exposed and, once ITS trigger height is used up,
+   releases in turn; card 3 last. */
+.file-stack-grid {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.file-stack-trigger {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  position: relative;
+  width: 100%;
+}
 
 .file-stack-card {
   position: sticky;
@@ -213,9 +232,6 @@ section.tight { padding: var(--sp-9) 0; }
   overflow: hidden;
   border-bottom: 8px solid var(--burnt-600);
 }
-.file-stack-slot:nth-child(1) .file-stack-card { z-index: 3; }
-.file-stack-slot:nth-child(2) .file-stack-card { z-index: 2; }
-.file-stack-slot:nth-child(3) .file-stack-card { z-index: 1; }
 
 .file-stack-card.tone-denim { background: var(--denim-700); }
 .file-stack-card.tone-denim h2 { color: #fff; }
