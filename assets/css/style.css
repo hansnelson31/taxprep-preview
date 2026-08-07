@@ -156,20 +156,91 @@ p { margin: 0 0 1em; }
 section { padding: var(--section-y) 0; }
 section.tight { padding: var(--sp-9) 0; }
 
-/* ---- Scroll-stack panels (experiment) ----
-   Each panel pins at the top of the viewport and holds there while
-   the next one, being later in source order, scrolls up over it —
-   giving a "cards stacking" reveal effect. Panels after the last one
-   in the group behave normally (no wrapper needed to "turn it off"). */
-.scroll-stack-panel {
-  position: sticky;
-  top: 0;
-  min-height: 100vh;
+/* ---- File-stack (experiment) ----
+   Reversed sticky stack: all three tabs are visible the whole time on
+   the left; each card pins in place, then scrolls away (peels off) to
+   reveal the next card, which was already sitting pinned underneath.
+   Card 1 stays visually on top of 2 and 3 while it's exiting (highest
+   z-index), same idea in reverse for 2 over 3. After card 3 releases,
+   scrolling continues normally into whatever comes next. */
+.file-stack {
   display: flex;
-  align-items: center;
-  background: var(--surface-page);
+  align-items: stretch;
 }
-.scroll-stack-panel.band-tan { background: var(--grain-200); }
+.file-stack-tabs-col {
+  width: 56px;
+  flex-shrink: 0;
+  position: relative;
+}
+.file-stack-tabs {
+  position: sticky;
+  top: 42vh;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+}
+.file-stack-tab {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 16px 9px;
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  box-shadow: var(--shadow-sm);
+}
+.file-stack-tab.tone-denim { background: var(--denim-700); color: #fff; }
+.file-stack-tab.tone-seafoam { background: var(--green-700); color: #fff; }
+.file-stack-tab.tone-cream { background: var(--surface-card); color: var(--denim-700); }
+
+.file-stack-slots { flex: 1; min-width: 0; }
+.file-stack-slot { position: relative; height: 150vh; }
+
+.file-stack-card {
+  position: sticky;
+  top: 8vh;
+  height: 76vh;
+  margin-left: 20px;
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-xl);
+  padding: clamp(28px, 5vw, 64px) clamp(28px, 6vw, 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 8px solid var(--burnt-600);
+}
+.file-stack-slot:nth-child(1) .file-stack-card { z-index: 3; }
+.file-stack-slot:nth-child(2) .file-stack-card { z-index: 2; }
+.file-stack-slot:nth-child(3) .file-stack-card { z-index: 1; }
+
+.file-stack-card.tone-denim { background: var(--denim-700); }
+.file-stack-card.tone-denim h2 { color: #fff; }
+.file-stack-card.tone-seafoam { background: var(--green-700); }
+.file-stack-card.tone-seafoam h2 { color: #fff; }
+.file-stack-card.tone-cream { background: var(--surface-card); }
+
+.file-stack-card .eyebrow { margin-bottom: 0.6em; }
+.file-stack-card h2 { max-width: 640px; }
+.file-stack-card .fsc-lead { max-width: 600px; font-size: 1.1rem; color: var(--text-on-dark-muted); margin-bottom: 0; }
+
+.file-stack-list { margin-top: 1.6em; display: grid; gap: 16px; max-width: 600px; }
+.file-stack-list a { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 1.15rem; color: #fff; text-decoration: none; }
+.file-stack-list a:hover { text-decoration: underline; }
+.file-stack-list .fsl-arrow { color: var(--burnt-500); flex-shrink: 0; }
+
+.fsc-quote { margin: 0 0 1.4em; padding: 0; border: none; font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.5; color: var(--text-strong); }
+.fsc-quote:last-child { margin-bottom: 0; }
+.fsc-quote cite { display: block; margin-top: 10px; font-family: var(--font-sans); font-style: normal; font-weight: 600; font-size: 0.9rem; color: var(--green-700); }
+
+@media (max-width: 700px) {
+  .file-stack-tabs-col { width: 40px; }
+  .file-stack-tab { font-size: 11px; padding: 12px 6px; }
+  .file-stack-card { height: 82vh; margin-left: 10px; }
+}
 
 /* ---- Buttons ---- */
 .btn {

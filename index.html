@@ -16,85 +16,51 @@ description: "Tax preparation that's right on the money. HGN Tax Prep serves ind
   </div>
 </section>
 
-<section class="scroll-stack-panel">
-  <div class="container-xl">
-    <div class="tab-divider">
-      <span class="tab-num">01</span>
-      <span class="tab-rule"></span>
-      <div class="tab-body">
-        <span class="eyebrow tone-seafoam">What We Do</span>
+<section class="file-stack">
+  <div class="file-stack-tabs-col">
+    <div class="file-stack-tabs">
+      <span class="file-stack-tab tone-denim">01</span>
+      <span class="file-stack-tab tone-seafoam">02</span>
+      <span class="file-stack-tab tone-cream">03</span>
+    </div>
+  </div>
+  <div class="file-stack-slots">
+
+    <div class="file-stack-slot">
+      <div class="file-stack-card tone-denim">
+        <span class="eyebrow tone-onDark">What We Do</span>
         <h2>Beyond the numbers</h2>
-        <p>Understanding tax law takes deep knowledge of your industry, a willingness to pick up the phone, and the fortitude to follow through &mdash; not just software and a deadline.</p>
+        <p class="fsc-lead">Understanding tax law takes deep knowledge of your industry, a willingness to pick up the phone, and the fortitude to follow through.</p>
+        <ul class="file-stack-list">
+          <li><a href="{{ '/services/' | relative_url }}"><span class="fsl-arrow">&rarr;</span> Accounting &amp; Bookkeeping</a></li>
+          <li><a href="{{ '/services/' | relative_url }}"><span class="fsl-arrow">&rarr;</span> Tax Preparation &amp; Planning</a></li>
+          <li><a href="{{ '/services/' | relative_url }}"><span class="fsl-arrow">&rarr;</span> Business Advisory Services</a></li>
+        </ul>
       </div>
     </div>
-    <div class="grid grid-3">
-      <div class="card feature-card">
-        <div class="feature-icon">{% include icons/calculator.html %}</div>
-        <h3>Accounting &amp; Bookkeeping</h3>
-        <p>We record and interpret the economics of your business &mdash; QuickBooks setup, training, and monthly bookkeeping that keeps your numbers clear and current, all year long.</p>
-      </div>
-      <div class="card feature-card">
-        <div class="feature-icon">{% include icons/file-percent.html %}</div>
-        <h3>Tax Preparation &amp; Planning</h3>
-        <p>Tailored strategies to reduce your tax bill, prepared and carried out &mdash; for individuals, businesses, trusts, and estates, planned ahead of time instead of rushed in April.</p>
-      </div>
-      <div class="card feature-card">
-        <div class="feature-icon">{% include icons/compass.html %}</div>
-        <h3>Business Advisory Services</h3>
-        <p>Guidance that keeps your business on the right path &mdash; entity selection, cash management, and process improvements built around how your business actually operates.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="band-tan scroll-stack-panel">
-  <div class="container-xl">
-    <div class="tab-divider">
-      <span class="tab-num">02</span>
-      <span class="tab-rule"></span>
-      <div class="tab-body">
-        <span class="eyebrow tone-seafoam">Industries of Expertise</span>
+    <div class="file-stack-slot">
+      <div class="file-stack-card tone-seafoam">
+        <span class="eyebrow tone-onDark">Industries of Expertise</span>
         <h2>We know your business, not just your bracket</h2>
-        <p>Some tax situations need more than general knowledge. These are the industries we specialize in.</p>
+        <p class="fsc-lead">Some tax situations need more than general knowledge. These are the industries we specialize in.</p>
+        <ul class="file-stack-list">
+          <li><a href="{{ '/construction-real-estate/' | relative_url }}"><span class="fsl-arrow">&rarr;</span> Construction &amp; Real Estate</a></li>
+          <li><a href="{{ '/high-net-worth/' | relative_url }}"><span class="fsl-arrow">&rarr;</span> High Net Worth</a></li>
+          <li><a href="{{ '/agriculture/' | relative_url }}"><span class="fsl-arrow">&rarr;</span> Agriculture</a></li>
+        </ul>
       </div>
     </div>
-    <div class="grid grid-3">
-      <a href="{{ '/construction-real-estate/' | relative_url }}" class="card-photo is-interactive">
-        <img src="{{ '/assets/img/photos/land-clearing.jpg' | relative_url }}" alt="Construction and land development site">
-        <div class="card-photo-body">
-          <h3>Construction &amp; Real Estate</h3>
-          <p>Solid tax strategy for solid ground-up work &mdash; from job costing to entity structure.</p>
-        </div>
-      </a>
-      <a href="{{ '/high-net-worth/' | relative_url }}" class="card-photo is-interactive">
-        <img src="{{ '/assets/img/photos/lake-boardwalk-sunset.jpg' | relative_url }}" alt="Sunset over a Colorado lake">
-        <div class="card-photo-body">
-          <h3>High Net Worth</h3>
-          <p>A holistic plan to maximize tax efficiency across your whole portfolio, not just this year.</p>
-        </div>
-      </a>
-      <a href="{{ '/agriculture/' | relative_url }}" class="card-photo is-interactive">
-        <img src="{{ '/assets/img/photos/tractor-hay-baling.jpg' | relative_url }}" alt="Tractor baling hay on a Colorado farm">
-        <div class="card-photo-body">
-          <h3>Agriculture</h3>
-          <p>Coops, crop production, feedlots, and dairies &mdash; tax strategy built for how farms actually run.</p>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
 
-<section class="scroll-stack-panel">
-  <div class="container-xl">
-    <div class="tab-divider">
-      <span class="tab-num">03</span>
-      <span class="tab-rule"></span>
-      <div class="tab-body">
-        <span class="eyebrow tone-seafoam">Reviews</span>
+    <div class="file-stack-slot">
+      <div class="file-stack-card tone-cream">
+        <span class="eyebrow">Reviews</span>
         <h2>What clients say</h2>
+        <blockquote class="fsc-quote">&ldquo;Proactive, professional, organized, extremely knowledgeable, and very reasonable. Best accountant we have had.&rdquo;<cite>Eda T. &mdash; Google Review</cite></blockquote>
+        <blockquote class="fsc-quote">&ldquo;He breaks it down in plain language &mdash; line by line. Clear in communication.&rdquo;<cite>Josh M. &mdash; Google Review</cite></blockquote>
       </div>
     </div>
-    {% include testimonials.html %}
+
   </div>
 </section>
 
